@@ -1,0 +1,15 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+.astro/
+.wrangler/
+*.png
+*.jpg
+*.txt
+*.bak
+stitch_terminal_feed_bold_syntax.zip

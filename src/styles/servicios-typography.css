@@ -1,0 +1,81 @@
+/* ============================================
+   WORCA — SISTEMA TIPOGRÁFICO GLOBAL SERVICIOS
+   Importar en todas las páginas de servicio
+   ============================================ */
+
+/* BASE */
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* TÍTULOS DE SECCIÓN — una sola línea sin wrap */
+h2, .section-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* PÁRRAFOS Y BODY TEXT */
+p, .body-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* TERMINAL — bloque de proceso/consola */
+.terminal-comment {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.terminal-command {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.terminal-description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* LABELS Y TAGS MONOSPACE */
+.tag, .label, .mono-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+/* PRECIOS */
+.price-display {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+}
+
+/* CHECKLIST ITEMS */
+.checklist-item {
+  font-size: 0.875rem;
+}
+
+/* HERO — protegido, no modificar desde aquí */
+.hero-title {
+  /* Se define en cada página individualmente */
+}
+
+/* FAQ */
+.faq-question {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.faq-answer {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #9a9a8a;
+}
+
+.btn, button, .cta {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+}

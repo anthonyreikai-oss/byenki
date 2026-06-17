@@ -1,0 +1,522 @@
+---
+// Header con menú dropdown terminal-style
+---
+
+<header class="worca-header" id="siteHeader" transition:name="site-header" transition:persist>
+  <div class="worca-header-inner">
+    <a href="/" class="worca-header-logo" id="header-logo" aria-label="Creado por ONE">
+      <span class="worca-header-text-logo">by/enki<span class="enki-cursor">_</span></span>
+    </a>
+
+    <nav class="worca-header-nav">
+      <a href="/" class="worca-nav-link">INICIO</a>
+
+      <!-- Categorías dropdown -->
+      <div class="worca-dropdown">
+        <button class="worca-dropdown-toggle">
+          CATEGORÍAS
+          <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="worca-dropdown-menu">
+          <div class="worca-term-bar">
+            <span class="worca-term-dot red"></span>
+            <span class="worca-term-dot yellow"></span>
+            <span class="worca-term-dot green"></span>
+            <span class="worca-term-path">categorias@blog:~/</span>
+          </div>
+          <div class="worca-term-body">
+            <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./categorias/</span></div>
+            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> SEO y Posicionamiento<span class="worca-term-status">ACTIVO</span></a>
+            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Diseño y Tecnología<span class="worca-term-status">ACTIVO</span></a>
+            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Estrategia Digital<span class="worca-term-status">ACTIVO</span></a>
+            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Negocios y Emprendimiento<span class="worca-term-status">ACTIVO</span></a>
+            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Inteligencia Artificial<span class="worca-term-status">ACTIVO</span></a>
+            <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recursos dropdown -->
+      <div class="worca-dropdown">
+        <button class="worca-dropdown-toggle">
+          RECURSOS
+          <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="worca-dropdown-menu">
+          <div class="worca-term-bar">
+            <span class="worca-term-dot red"></span>
+            <span class="worca-term-dot yellow"></span>
+            <span class="worca-term-dot green"></span>
+            <span class="worca-term-path">recursos@blog:~/</span>
+          </div>
+          <div class="worca-term-body">
+            <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./recursos/</span></div>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Guías Gratuitas<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Plantillas y Templates<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Herramientas Recomendadas<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Checklist de Auditoría<span class="worca-term-status">PRÓXIMO</span></a>
+            <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sobre dropdown -->
+      <div class="worca-dropdown">
+        <button class="worca-dropdown-toggle">
+          SOBRE
+          <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="worca-dropdown-menu">
+          <div class="worca-term-bar">
+            <span class="worca-term-dot red"></span>
+            <span class="worca-term-dot yellow"></span>
+            <span class="worca-term-dot green"></span>
+            <span class="worca-term-path">about@one:~/</span>
+          </div>
+          <div class="worca-term-body">
+            <div class="worca-term-prompt">$ <span class="worca-term-cmd">cat ./README.md</span></div>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Quiénes Somos<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> El Estudio<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Contacto<span class="worca-term-status">PRÓXIMO</span></a>
+            <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
+          </div>
+        </div>
+      </div>
+
+      <a href="/blog" class="worca-nav-link">BLOG</a>
+
+      <button id="theme-toggle" class="worca-theme-toggle" aria-label="Cambiar tema">
+        <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="worca-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button id="lang-toggle" class="worca-lang-toggle" aria-label="Cambiar idioma">ES</button>
+    </nav>
+
+    <button class="worca-mobile-toggle" id="worcaMobileToggle" aria-label="Menú">
+      <span class="worca-mobile-toggle-bar"></span>
+      <span class="worca-mobile-toggle-bar"></span>
+    </button>
+  </div>
+
+  <div class="worca-mobile-menu" id="worcaMobileMenu">
+    <a href="/" class="worca-mobile-nav-link">INICIO</a>
+    <div class="worca-mobile-section-label">CATEGORÍAS</div>
+    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> SEO y Posicionamiento</a>
+    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Diseño y Tecnología</a>
+    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Estrategia Digital</a>
+    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Negocios y Emprendimiento</a>
+    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Inteligencia Artificial</a>
+    <div class="worca-mobile-section-label">RECURSOS</div>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Guías Gratuitas</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Plantillas y Templates</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Herramientas</a>
+    <div class="worca-mobile-section-label">SOBRE</div>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Quiénes Somos</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Contacto</a>
+    <a href="/blog" class="worca-mobile-nav-link">BLOG</a>
+    <button id="theme-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar tema">
+      <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="worca-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <span class="worca-mobile-theme-label">TEMA</span>
+    </button>
+    <button id="lang-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar idioma">
+      ES
+      <span class="worca-mobile-theme-label">IDIOMA</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Mobile toggle
+  const toggle = document.getElementById('worcaMobileToggle');
+  const menu = document.getElementById('worcaMobileMenu');
+  toggle?.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    menu?.classList.toggle('open');
+  });
+
+  // Desktop dropdowns
+  document.querySelectorAll('.worca-dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const dropdown = btn.closest('.worca-dropdown');
+      const isOpen = dropdown?.classList.contains('open');
+
+      // Close all others
+      document.querySelectorAll('.worca-dropdown.open').forEach(d => d.classList.remove('open'));
+
+      // Toggle this one
+      if (!isOpen) dropdown?.classList.add('open');
+    });
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.worca-dropdown')) {
+      document.querySelectorAll('.worca-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+  });
+
+  // Theme toggle
+  function applyTheme(theme: string | null) {
+    const html = document.documentElement;
+    if (theme === 'dark') { html.classList.remove('light'); return; }
+    if (theme === 'light') { html.classList.add('light'); return; }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.classList.remove('light'); return; }
+    html.classList.add('light');
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isLight = !html.classList.contains('light');
+    if (isLight) {
+      html.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+
+  // Persist theme across Astro view transitions
+  document.addEventListener('astro:after-swap', () => {
+    applyTheme(localStorage.getItem('theme'));
+  });
+
+  // React to system preference changes (when user hasn't made explicit choice)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!localStorage.getItem('theme')) applyTheme(null);
+  });
+
+  // Language toggle
+  function setLang(lang: string) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    const btns = [document.getElementById('lang-toggle'), document.getElementById('lang-toggle-mobile')];
+    btns.forEach(b => { if (b) b.textContent = lang.toUpperCase(); });
+  }
+
+  function toggleLang() {
+    const current = document.documentElement.lang || 'es';
+    setLang(current === 'es' ? 'en' : 'es');
+  }
+
+  (function() {
+    const saved = localStorage.getItem('lang');
+    if (saved) setLang(saved);
+  })();
+
+  document.getElementById('lang-toggle')?.addEventListener('click', toggleLang);
+  document.getElementById('lang-toggle-mobile')?.addEventListener('click', toggleLang);
+</script>
+
+<style>
+  .worca-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-w-black) 92%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+  }
+
+  .worca-header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Logo */
+  .worca-header-logo { display: block; line-height: 1; flex-shrink: 0; text-decoration: none; }
+  .worca-header-text-logo {
+    font-family: "Anton", sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: -0.03em;
+    color: var(--color-w-cream);
+    transition: opacity 0.25s ease;
+    display: block;
+    line-height: 0.85;
+  }
+  .worca-header-logo:hover .worca-header-text-logo { opacity: 0.8; }
+  @media (min-width: 768px) {
+    .worca-header-text-logo { font-size: 2.2rem; }
+  }
+
+  /* Nav */
+  .worca-header-nav {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+  @media (min-width: 768px) { .worca-header-nav { display: flex; } }
+
+  .worca-nav-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-w-muted);
+    text-decoration: none;
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+    padding: 0.55rem 0.65rem;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+  .worca-nav-link:hover,
+  .worca-nav-link.active { color: var(--color-w-orange); border-color: var(--color-w-orange); }
+
+  /* Dropdown toggle */
+  .worca-dropdown { position: relative; }
+  .worca-dropdown-toggle {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-w-muted);
+    background: none;
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+    cursor: pointer;
+    padding: 0.55rem 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .worca-dropdown-toggle:hover,
+  .worca-dropdown.open > .worca-dropdown-toggle { color: var(--color-w-orange); border-color: var(--color-w-orange); }
+  .worca-dropdown-arrow { transition: transform 0.2s; }
+  .worca-dropdown.open .worca-dropdown-arrow { transform: rotate(180deg); }
+
+  /* Dropdown menu */
+  .worca-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    min-width: 300px;
+    background: var(--color-w-void);
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 20%, transparent);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    z-index: 60;
+    overflow: hidden;
+  }
+  .worca-dropdown.open .worca-dropdown-menu { display: block; }
+
+  /* Terminal bar */
+  .worca-term-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--color-w-surface);
+    border-bottom: 1px dashed color-mix(in srgb, var(--color-w-cream) 10%, transparent);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--color-w-muted);
+  }
+  .worca-term-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .worca-term-dot.red { background: #C4622D; }
+  .worca-term-dot.yellow { background: #C4922D; }
+  .worca-term-dot.green { background: #62C46D; }
+  .worca-term-path { margin-left: 6px; opacity: 0.6; }
+
+  /* Terminal body */
+  .worca-term-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .worca-term-prompt {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: #62C46D;
+    margin-bottom: 8px;
+  }
+  .worca-term-cmd { color: var(--color-w-cream); }
+  .worca-term-cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--color-w-orange);
+    animation: worcaBlink 1s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  @keyframes worcaBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .worca-term-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--color-w-muted);
+    text-decoration: none;
+    padding: 6px 8px;
+    transition: background 0.15s, color 0.15s;
+    border-radius: 2px;
+  }
+  .worca-term-line:hover { background: color-mix(in srgb, var(--color-w-orange) 10%, transparent); color: var(--color-w-cream); }
+  .worca-term-gt { color: var(--color-w-orange); font-weight: bold; }
+  .worca-term-status {
+    margin-left: auto;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+    opacity: 0.6;
+    color: #62C46D;
+    white-space: nowrap;
+  }
+  .worca-term-prompt:last-child {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  /* Mobile */
+  .worca-mobile-toggle {
+    display: flex; flex-direction: column; gap: 5px;
+    background: transparent; border: none; cursor: pointer;
+    padding: 6px; margin-left: auto;
+  }
+  @media (min-width: 768px) { .worca-mobile-toggle { display: none; } }
+  .worca-mobile-toggle-bar {
+    display: block; width: 26px; height: 2px;
+    background: var(--color-w-cream);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .worca-mobile-toggle.open .worca-mobile-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .worca-mobile-toggle.open .worca-mobile-toggle-bar:nth-child(2) { transform: translateY(-7px) rotate(-45deg); }
+
+  .worca-mobile-menu {
+    display: none; flex-direction: column;
+    padding: 0.5rem 1rem 1rem;
+    border-top: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+  }
+  .worca-mobile-menu.open { display: flex; }
+
+  .worca-mobile-section-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-w-orange);
+    padding: 0.6rem 0 0.2rem;
+    margin-top: 0.3rem;
+    border-top: 1px dashed color-mix(in srgb, var(--color-w-cream) 6%, transparent);
+  }
+
+  .worca-mobile-nav-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-w-muted);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--color-w-cream) 6%, transparent);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .worca-mobile-nav-link:hover { color: var(--color-w-orange); }
+  .worca-mobile-nav-link .worca-term-gt {
+    font-size: 10px; flex-shrink: 0;
+  }
+
+  /* ── Theme Toggle ── */
+  .worca-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+    cursor: pointer;
+    color: var(--color-w-muted);
+    transition: color 0.2s, border-color 0.2s;
+    padding: 0;
+  }
+  .worca-theme-toggle:hover {
+    color: var(--color-w-orange);
+    border-color: var(--color-w-orange);
+  }
+
+  .worca-theme-sun { display: var(--sun-display, none); }
+  .worca-theme-moon { display: var(--moon-display, block); }
+
+  .worca-mobile-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-w-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed color-mix(in srgb, var(--color-w-cream) 6%, transparent);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+  }
+  .worca-mobile-theme-toggle:hover { color: var(--color-w-orange); }
+  .worca-mobile-theme-label { margin-left: auto; }
+
+  /* ── Language Toggle ── */
+  .worca-lang-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 1px dashed color-mix(in srgb, var(--color-w-cream) 15%, transparent);
+    cursor: pointer;
+    color: var(--color-w-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: color 0.2s, border-color 0.2s;
+    padding: 0;
+  }
+  .worca-lang-toggle:hover {
+    color: var(--color-w-orange);
+    border-color: var(--color-w-orange);
+  }
+
+  @keyframes hdrBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .enki-cursor {
+    animation: hdrBlink 1s step-end infinite;
+    color: var(--color-w-orange);
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { getBlogPosts } from "../data/blog";
+import PostLayout from "../layouts/PostLayout.astro";
+
+const allPosts = await getBlogPosts();
+
+if (!allPosts.length) {
+  throw new Error("No hay posts en src/content/blog/");
+}
+
+const latestPost = allPosts[0];
+const { Content } = await latestPost.render();
+
+const idx = 0;
+const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
+const nextPost = null;
+---
+
+<PostLayout post={latestPost} prevPost={prevPost} nextPost={nextPost}>
+  <Content />
+</PostLayout>

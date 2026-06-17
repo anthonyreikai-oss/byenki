@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Sobre | Creado por ONE" description="Hi, mi nombre es Enki. Director Creativo, polímata y constructor. Bienvenido a mi jardín digital.">
+  <Header />
+  <main class="min-h-screen bg-w-black text-w-cream relative">
+    <!-- Brutalist dashed grid background -->
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-5">
+      <div class="max-w-screen-2xl mx-auto h-full w-full border-x border-dashed border-dashed-cream flex justify-between">
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-screen-xl mx-auto px-4 md:px-6 pt-8 pb-16">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-between mb-10">
+        <a href="/" class="inline-flex items-center gap-2 font-mono text-xs text-w-muted hover:text-w-orange transition-colors">
+          <span>←</span> VOLVER AL INICIO
+        </a>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <!-- Terminal prompt -->
+        <div class="flex items-center gap-3 mb-6 font-mono text-[10px] text-w-orange uppercase tracking-widest">
+          <span class="w-8 h-px bg-w-orange/40"></span>
+          <span>$ whoami</span>
+        </div>
+
+        <!-- Greeting -->
+        <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.92] uppercase text-w-cream mb-8">
+          Hi, mi nombre es Enki.
+        </h1>
+
+        <!-- Body -->
+        <div class="font-mono text-base text-[#908D88] leading-[1.8] space-y-5 mb-14">
+          <p>
+            Un <strong>polímata de más de 40 años</strong>, profundamente conectado con el mundo espiritual y establecido profesionalmente como <strong>Director Creativo</strong> e <strong>incubador de negocios</strong>.
+          </p>
+          <p>
+            Bienvenido a mi jardín digital, aquí te enseñaré a encontrar y desbloquear tu <strong>potencial creativo</strong>, inspirarás a otros y <strong>monetizarás tu arte</strong>.
+          </p>
+          <p>
+            Un jardín digital es una combinación de un <strong>cuaderno en línea</strong> y una <strong>Wikipedia personal</strong>. En ese sentido, este lugar no es un sitio web normal ni un blog. Es una colección de <strong>ideas</strong>, <strong>conocimiento</strong> y <strong>experiencias</strong> de un polímata que ha dedicado su vida entera a la <strong>espiritualidad</strong>, la <strong>creatividad</strong> y el crecimiento personal.
+          </p>
+          <p>
+            Dentro de este Jardín Digital nos enfocaremos en explorar el <strong>desarrollo creativo</strong>, el <strong>crecimiento personal</strong> y el <strong>desarrollo espiritual</strong>. Este Jardín Digital está dedicado a quienes buscan <strong>expresarse con autenticidad</strong> y sienten la necesidad de <strong>transformarse en quienes verdaderamente nacieron para ser</strong>.
+          </p>
+          <p>
+            Tu presencia en esta tierra no es accidental; naciste con un propósito único.
+          </p>
+        </div>
+
+        <!-- Thinking & Doing Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
+          <div class="border border-dashed border-dashed-cream p-5">
+            <h3 class="font-mono text-[10px] uppercase tracking-widest text-w-orange mb-4 pb-3 border-b border-dashed border-dashed-cream">
+              En qué pienso...
+            </h3>
+            <ul class="flex flex-col gap-3 font-mono text-sm text-w-muted">
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">▸</span>
+                <span>Desarrollo Creativo</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">▸</span>
+                <span>Crecimiento Personal</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">▸</span>
+                <span>Desarrollo Espiritual</span>
+              </li>
+            </ul>
+          </div>
+          <div class="border border-dashed border-dashed-cream p-5">
+            <h3 class="font-mono text-[10px] uppercase tracking-widest text-w-orange mb-4 pb-3 border-b border-dashed border-dashed-cream">
+              En qué estoy...
+            </h3>
+            <ul class="flex flex-col gap-3 font-mono text-sm text-w-muted">
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">↗</span>
+                <span>Desarrollo Creativo</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">↗</span>
+                <span>Crecimiento Personal</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-w-orange mt-0.5">↗</span>
+                <span>Desarrollo Espiritual</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quote + CTA -->
+        <div class="border border-dashed border-dashed-cream p-6 text-center">
+          <blockquote class="font-mono text-sm text-w-muted italic mb-5 leading-relaxed">
+            "Creo que tienes la responsabilidad de vivir una vida tan plena que te conviertas en un modelo a seguir para otros."
+          </blockquote>
+          <a href="/blog" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-w-orange hover:text-w-cream transition-colors">
+            Leer ensayos →
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

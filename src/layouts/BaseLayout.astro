@@ -1,0 +1,92 @@
+---
+import '../styles/index.css';
+import { ViewTransitions } from 'astro:transitions';
+
+const { title = 'Creado por ONE | Blog de Diseño Web y Estrategia Digital', description = 'Blog de diseño web, branding y estrategia digital en Santo Domingo. Artículos sobre WordPress, SEO local, diseño con IA y brutalismo digital.' } = Astro.props;
+const site = 'https://creadopor.one';
+const rawPath = Astro.url.pathname === '/' ? '' : Astro.url.pathname.replace(/\/$/, '');
+const canonical = rawPath ? `${site}${rawPath}` : site;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script is:inline>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (t === 'dark') return;
+        if (t === 'light') { document.documentElement.classList.add('light'); return; }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) return;
+        document.documentElement.classList.add('light');
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MVH73VX2');</script>
+    <!-- End Google Tag Manager -->
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Creado por ONE" />
+
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/logo-one.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Creado por ONE" />
+    <meta property="og:locale" content="es_DO" />
+    <meta property="og:image" content={`${site}/og-image.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${site}/og-image.png`} />
+
+    <ViewTransitions />
+
+    <!-- Schema.org Organization + LocalBusiness -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": "https://creadopor.one",
+      "name": "Creado por ONE",
+      "url": "https://creadopor.one",
+      "email": "hello@creadopor.one",
+      "logo": "https://creadopor.one/logo-one.svg",
+      "image": "https://creadopor.one/logo-one.svg",
+      "telephone": "+18099976950",
+      "description": "Estudio de diseño web en Santo Domingo, República Dominicana. Creamos páginas web estratégicas que convierten visitantes en clientes.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santo Domingo",
+        "addressCountry": "DO"
+      }
+    })} />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MVH73VX2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <slot />
+  </body>
+</html>

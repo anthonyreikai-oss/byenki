@@ -1,0 +1,385 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getBlogPosts, formatDate, isoDate, getAllTags, type BlogPost } from "../data/blog";
+
+export interface Props {
+  post: BlogPost;
+  prevPost?: BlogPost | null;
+  nextPost?: BlogPost | null;
+}
+
+const { post, prevPost = null, nextPost = null } = Astro.props;
+const fm = post.data;
+const title = fm.titulo || "Artículo";
+const description = fm.meta_descripcion || "";
+const readTime = fm.tiempo_lectura || "";
+const category = fm.categoria || "GENERAL";
+const tags = fm.etiquetas || [];
+const displayDate = formatDate(fm.fecha);
+const publishedISO = isoDate(fm.fecha);
+const author = fm.autor || "Creado por ONE";
+
+const allPosts = await getBlogPosts();
+const sidebarPosts = allPosts.slice(0, 3);
+const allTags = getAllTags(allPosts);
+
+const site = "https://creadopor.one";
+const postUrl = `${site}/blog/${post.slug}`;
+
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${postUrl}#article`,
+  headline: title,
+  description,
+  datePublished: publishedISO,
+  dateModified: publishedISO,
+  author: { "@type": "Organization", "@id": `${site}#organization`, name: author, url: site },
+  publisher: { "@type": "Organization", "@id": `${site}#organization`, name: "Creado por ONE", url: site, logo: { "@type": "ImageObject", url: `${site}/logo-one.svg` } },
+  image: `${site}/og-image.png`,
+  url: postUrl,
+  mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+  inLanguage: "es",
+  about: category,
+  keywords: fm.palabras_clave || "",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: site },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${site}/blog` },
+    { "@type": "ListItem", position: 3, name: title, item: postUrl },
+  ],
+};
+---
+
+<BaseLayout title={`${title} — Blog | Creado por ONE`} description={description}>
+  <Fragment slot="head">
+    <meta name="keywords" content={fm.palabras_clave || ""} />
+    {readTime && <meta name="article:reading_time" content={readTime} />}
+    <meta property="article:published_time" content={publishedISO} />
+    <meta property="article:modified_time" content={publishedISO} />
+    <meta property="article:author" content={author} />
+    <meta property="article:section" content={category} />
+    <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <!-- Reading progress bar -->
+  <div id="progress-bar" class="progress-bar"></div>
+
+  <Header />
+  <main class="min-h-screen bg-w-black text-w-cream relative">
+    <!-- Brutalist dashed grid background -->
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-5">
+      <div class="max-w-screen-2xl mx-auto h-full w-full border-x border-dashed border-dashed-cream flex justify-between">
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-screen-xl mx-auto px-4 md:px-6 pt-8 pb-16">
+      <div class="flex items-center justify-between mb-8">
+          <a href="/about" class="inline-flex items-center gap-2 font-mono text-xs text-w-muted hover:text-w-orange transition-colors">
+            Hi, mi nombre es Enki.<span class="enki-cursor">_</span>
+          </a>
+        <span class="font-mono text-[10px] uppercase tracking-widest text-w-muted">{readTime}</span>
+      </div>
+
+      <div class="lg:flex lg:gap-10 xl:gap-12 justify-center">
+        <!-- Sidebar: últimos posts + tags (sticky) -->
+        <aside class="hidden lg:block w-52 shrink-0" transition:name="post-sidebar">
+          <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
+            <div class="flex flex-col gap-1.5" id="toc-sidebar-section">
+              <span class="font-mono text-w-orange uppercase tracking-widest text-[10px] mb-1">EN ESTE POST</span>
+              <div id="toc-sidebar-list"></div>
+            </div>
+
+            <div class="flex flex-col gap-1.5" id="sidebar-posts">
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">ÚLTIMOS POSTS</span>
+              {sidebarPosts.map((p) => (
+                <a
+                  href={`/blog/${p.slug}`}
+                  data-astro-prefetch="hover"
+                  class={`block leading-relaxed transition-colors${p.slug === post.slug ? ' text-w-orange font-bold' : ' text-w-muted hover:text-w-cream'}`}
+                  style="font-size:11px"
+                >
+                  {p.slug === post.slug ? '▸ ' : '\u00A0\u00A0'}{p.data.titulo}
+                </a>
+              ))}
+              {allPosts.length > 3 && (
+                <a href="/blog" class="text-w-muted hover:text-w-orange transition-colors mt-1" style="font-size:10px">
+                  +{allPosts.length - 3} más →
+                </a>
+              )}
+              <a href="/blog" class="text-w-orange hover:text-w-cream transition-colors uppercase" style="font-size:10px">
+                Leer más ensayos →
+              </a>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">TEMAS</span>
+              <div class="flex flex-wrap gap-1">
+                {allTags.slice(0, 6).map((tag) => (
+                  <a href={`/blog`} class="text-[9px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{tag}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Article -->
+        <article class="max-w-3xl min-w-0 flex-1" id="blog-article" transition:name="post-article">
+          <!-- TOC mobile -->
+          <details class="lg:hidden mb-6 font-mono text-xs" id="toc-mobile">
+            <summary class="text-w-orange uppercase cursor-pointer select-none flex items-center gap-2">
+              <span class="inline-block w-4 h-4 border border-w-orange/40 relative">
+                <span class="absolute inset-0 flex items-center justify-center text-[10px] toc-icon">+</span>
+              </span>
+              ÍNDICE
+            </summary>
+            <div class="mt-4 flex flex-col gap-1.5 pl-6" id="toc-mobile-list"></div>
+          </details>
+
+          <header class="mb-10">
+            <div class="flex items-center gap-3 mb-4 font-mono text-[10px] text-w-orange uppercase tracking-widest">
+              <span class="w-8 h-px bg-w-orange/40"></span>
+              <span>{category}</span>
+              {readTime && (
+                <>
+                  <span class="text-w-muted">·</span>
+                  <span class="text-w-muted">{readTime} de lectura</span>
+                </>
+              )}
+            </div>
+            <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.92] uppercase text-w-cream mb-6">
+              {title}
+            </h1>
+            <div class="flex items-center gap-4 font-mono text-xs text-w-muted uppercase border-t border-dashed border-dashed-cream pt-4">
+              <span class="text-w-orange font-bold">[{displayDate}]</span>
+              <span class="text-w-orange/40">//</span>
+              <span>{author}</span>
+            </div>
+          </header>
+
+          <div class="prose prose-invert prose-orange max-w-none font-mono text-base text-[#908D88] leading-[1.8]
+            [&_h1]:hidden
+            [&_h2]:font-display [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:text-w-cream [&_h2]:uppercase [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:border-l-2 [&_h2]:border-w-orange [&_h2]:pl-4
+            [&_h3]:font-display [&_h3]:text-lg [&_h3]:text-w-cream/90 [&_h3]:uppercase [&_h3]:mt-8 [&_h3]:mb-3
+            [&_p]:mb-5 [&_p]:leading-[1.8]
+            [&_strong]:text-w-cream [&_strong]:font-bold
+            [&_a]:text-w-orange [&_a]:underline [&_a]:decoration-w-orange/30 [&_a]:underline-offset-4 [&_a]:hover:decoration-w-orange
+            [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-5 [&_ul]:space-y-2
+            [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-5 [&_ol]:space-y-2
+            [&_li]:text-[#908D88] [&_li]:leading-[1.8]
+            [&_blockquote]:border-l-2 [&_blockquote]:border-w-orange/30 [&_blockquote]:pl-4 [&_blockquote]:py-1 [&_blockquote]:my-6 [&_blockquote]:text-w-muted/80 [&_blockquote]:italic
+            [&_code]:bg-w-orange/10 [&_code]:text-w-orange [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-xs [&_code]:font-mono
+            [&_pre]:bg-w-void [&_pre]:border [&_pre]:border-dashed [&_pre]:border-dashed-cream [&_pre]:p-4 [&_pre]:mb-6 [&_pre]:overflow-x-auto [&_pre]:text-xs
+            [&_pre_code]:bg-transparent [&_pre_code]:text-w-cream [&_pre_code]:p-0
+            [&_hr]:border-dashed [&_hr]:border-dashed-cream [&_hr]:my-8
+            [&_img]:max-w-full [&_img]:h-auto [&_img]:border [&_img]:border-dashed [&_img]:border-dashed-cream
+            [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6 [&_table]:text-xs [&_table]:font-mono
+            [&_th]:text-left [&_th]:text-w-cream [&_th]:uppercase [&_th]:font-bold [&_th]:p-3 [&_th]:border-b [&_th]:border-dashed [&_th]:border-dashed-cream [&_th]:text-[10px] [&_th]:tracking-widest
+            [&_td]:p-3 [&_td]:border-b [&_td]:border-dashed [&_td]:border-dashed-cream [&_td]:text-w-muted [&_td]:align-top
+            [&_tr]:hover:bg-w-orange/5 [&_tr]:transition-colors
+          ">
+            <slot />
+          </div>
+
+          {tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-10 mb-8">
+              {tags.map((tag) => (
+                <span class="font-mono text-[10px] border border-dashed border-dashed-cream px-3 py-1 text-w-muted uppercase">#{tag}</span>
+              ))}
+            </div>
+          )}
+
+          <!-- Prev / Next nav -->
+          <nav class="mt-12 pt-8 border-t border-dashed border-dashed-cream flex flex-col sm:flex-row gap-4 justify-between font-mono text-xs">
+            {prevPost ? (
+              <a href={`/blog/${prevPost.slug}`} class="group flex-1 min-w-0">
+                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">← ANTERIOR</span>
+                <span class="block leading-relaxed text-w-muted group-hover:text-w-orange transition-colors truncate">{prevPost.data.titulo}</span>
+              </a>
+            ) : <div class="flex-1" />}
+            {nextPost ? (
+              <a href={`/blog/${nextPost.slug}`} class="group flex-1 min-w-0 text-right">
+                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">SIGUIENTE →</span>
+                <span class="block leading-relaxed text-w-muted group-hover:text-w-orange transition-colors truncate">{nextPost.data.titulo}</span>
+              </a>
+            ) : <div class="flex-1" />}
+          </nav>
+        </article>
+      </div>
+    </div>
+  </main>
+  <Footer />
+
+  <button id="jump-to-top" class="jump-to-top" aria-label="Volver arriba">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
+  </button>
+</BaseLayout>
+
+<script>
+  // ── Reading progress bar ──
+  (function() {
+    const bar = document.getElementById('progress-bar');
+    const article = document.getElementById('blog-article');
+    if (!bar || !article) return;
+    const update = () => {
+      const h = article.offsetHeight - window.innerHeight;
+      bar.style.width = h > 0 ? Math.min((scrollY / h) * 100, 100) + '%' : '0%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // ── Table of contents (auto from h2, mobile + sidebar) ──
+  function initTOC() {
+    const article = document.getElementById('blog-article');
+    const mobileList = document.getElementById('toc-mobile-list');
+    const mobileDetails = document.getElementById('toc-mobile');
+    const sidebarList = document.getElementById('toc-sidebar-list');
+    const sidebarSection = document.getElementById('toc-sidebar-section');
+    if (!article) return;
+
+    const headings = article.querySelectorAll('.prose h2');
+    if (!headings.length) {
+      if (mobileDetails) mobileDetails.style.display = 'none';
+      if (sidebarSection) sidebarSection.style.display = 'none';
+      return;
+    }
+
+    const items: Array<{ id: string; text: string }> = [];
+    headings.forEach((h, i) => {
+      const id = h.id || 'section-' + (i + 1);
+      if (!h.id) h.id = id;
+      items.push({ id, text: h.textContent || '' });
+    });
+
+    function buildLink(item: { id: string; text: string }) {
+      return `<a href="#${item.id}" data-toc="${item.id}" class="block font-mono leading-relaxed text-w-muted hover:text-w-orange transition-colors" style="font-size:10px">> ${item.text}</a>`;
+    }
+    function buildLinkActive(item: { id: string; text: string }) {
+      return `<span data-toc="${item.id}" class="block font-mono leading-relaxed text-w-orange font-bold" style="font-size:10px">> ${item.text}</span>`;
+    }
+    function render(activeId: string | null) {
+      const html = items.map(item => item.id === activeId ? buildLinkActive(item) : buildLink(item)).join('');
+      if (mobileList) mobileList.innerHTML = html;
+      if (sidebarList) sidebarList.innerHTML = html;
+    }
+    render(null);
+
+    function onClick(e: Event) {
+      const link = (e.target as HTMLElement).closest('[data-toc]');
+      if (!link) return;
+      e.preventDefault();
+      const id = link.getAttribute('data-toc');
+      const el = id ? document.getElementById(id) : null;
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (mobileDetails) mobileDetails.open = false;
+      }
+    }
+    mobileList?.addEventListener('click', onClick);
+    sidebarList?.addEventListener('click', onClick);
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          render(entry.target.id);
+          break;
+        }
+      }
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    headings.forEach(h => observer.observe(h));
+  }
+
+  initTOC();
+  document.addEventListener('astro:after-swap', initTOC);
+
+  // Lazy load images
+  document.querySelectorAll('.prose img').forEach(img => {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+  });
+
+  // ── Jump to top ──
+  (function() {
+    const btn = document.getElementById('jump-to-top');
+    if (!btn) return;
+    const update = () => btn.classList.toggle('hidden', window.scrollY < 400);
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  })();
+</script>
+
+<style>
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--color-w-orange);
+    box-shadow: 0 0 6px color-mix(in srgb, var(--color-w-orange) 40%, transparent);
+    width: 0%;
+    z-index: 100;
+    transition: width 0.1s linear;
+  }
+
+  #toc-mobile summary::-webkit-details-marker { display: none; }
+  #toc-mobile summary { list-style: none; }
+  #toc-mobile[open] summary .toc-icon { opacity: 0; }
+  #toc-mobile[open] summary span:nth-child(1)::after {
+    content: '−';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+  #toc-mobile:not([open]) summary span:nth-child(1)::after {
+    content: '+';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .jump-to-top {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-w-orange);
+    background: var(--color-w-black);
+    color: var(--color-w-orange);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 99;
+  }
+  .jump-to-top:hover { opacity: 1; transform: translateY(-2px); }
+  .jump-to-top.hidden { opacity: 0; pointer-events: none; }
+
+  @keyframes enkiBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .enki-cursor {
+    animation: enkiBlink 1s step-end infinite;
+    color: var(--color-w-orange);
+  }
+</style>

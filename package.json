@@ -1,0 +1,29 @@
+{
+  "name": "new-one",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.7",
+    "@astrojs/sitemap": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.14",
+    "astro": "^5.7.12",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "typescript": "~5.8.2"
+  }
+}
