@@ -13,3 +13,4 @@ coverage/
 *.txt
 *.bak
 stitch_terminal_feed_bold_syntax.zip
+.superpowers/
