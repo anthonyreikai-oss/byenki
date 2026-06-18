@@ -1,6 +1,7 @@
 ---
 titulo: "¿Cómo preparar tu sistema de diseño para la era de la inteligencia artificial?"
 fecha: 2026-06-01
+lang: es
 autor: By Enki
 categoria: Diseño y Tecnología
 etiquetas:

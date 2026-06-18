@@ -2,7 +2,38 @@ import React from 'react';
 import { motion } from 'motion/react';
 import BrutalBox from './BrutalBox';
 
-const posts = [
+interface BlogContentProps {
+  locale?: string;
+  social?: {
+    instagram: string;
+    linkedin: string;
+  };
+}
+
+const t = (key: string, locale: string): string => {
+  const dict: Record<string, Record<string, string>> = {
+    'index_log': { es: 'INDEX.LOG', en: 'INDEX.LOG' },
+    'query_param': { es: 'QUERY_PARAMETER', en: 'QUERY_PARAMETER' },
+    'buscar_logs': { es: 'buscar_registros...', en: 'search_logs...' },
+    'filtro': { es: 'FILTRO:', en: 'FILTER:' },
+    'leer_post': { es: 'LEER ENSAYO →', en: 'READ ESSAY →' },
+    'anterior': { es: '← ANTERIOR', en: '← PREVIOUS' },
+    'siguiente': { es: 'SIGUIENTE →', en: 'NEXT →' },
+    'categorias': { es: 'CATEGORÍAS', en: 'CATEGORIES' },
+    'suscribete': { es: 'SUSCRÍBETE', en: 'SUBSCRIBE' },
+    'recibir': { es: 'RECIBIR ACTUALIZACIONES', en: 'RECEIVE UPDATES' },
+    'baja_frec': { es: 'Baja frecuencia. Alta densidad. Sin spam. Solo ideas que mueven la aguja.', en: 'Low frequency. High density. No spam. Only ideas that move the needle.' },
+    'placeholder_email': { es: 'USUARIO@DOMINIO.COM', en: 'USER@DOMAIN.COM' },
+    'suscribirse': { es: 'SUSCRIBIRSE', en: 'SUBSCRIBE' },
+    'hero_text': {
+      es: 'Transmisiones archivadas, esquemas arquitectónicos y actualizaciones del kernel. Escribir como forma de integridad estructural. Sin filler, sin SEO vacío.',
+      en: 'Archived transmissions, architectural schematics, and kernel updates. Writing as structural integrity. No filler, no empty SEO.',
+    },
+  };
+  return dict[key]?.[locale] ?? dict[key]?.es ?? key;
+};
+
+const postsEs = [
   {
     date: '15/06/2026',
     category: 'SEO',
@@ -40,14 +71,62 @@ const posts = [
   },
 ];
 
-const topics = [
+const postsEn = [
+  {
+    date: 'Jun 15, 2026',
+    category: 'SEO',
+    slug: 'how-to-rank-business-google-dominican-republic',
+    title: 'How to rank your business on Google in the Dominican Republic',
+    excerpt: 'Google Business Profile, local citations, reviews and local SEO — step by step to dominate the local map. Businesses with photos on their profile get 42% more direction requests.',
+  },
+  {
+    date: 'Jun 12, 2026',
+    category: 'STRATEGY',
+    slug: 'how-to-write-about-us-page-local-seo',
+    title: 'How to write an About Us page that attracts local customers',
+    excerpt: 'The second most visited page on any website — and most businesses in Latin America treat it as an afterthought. How to turn it into your most powerful local SEO asset.',
+  },
+  {
+    date: 'Jun 08, 2026',
+    category: 'AI',
+    slug: 'ai-for-freelancers-entrepreneurs-latin-america',
+    title: 'How can a freelancer in Latin America use AI to grow their business?',
+    excerpt: 'AI is no longer optional — it is the most accessible competitive lever for a Latin American SME. Tools that work in Spanish, marketing automation and closing the technology gap.',
+  },
+  {
+    date: 'Jun 05, 2026',
+    category: 'GEO',
+    slug: 'geo-audit-2026-website-ready-future-without-search-engines',
+    title: 'Is your website ready for a future without traditional search engines?',
+    excerpt: 'Over half of websites lack structured data that AIs can read. A GEO readiness audit for 2026: ChatGPT, Google AI Overviews and Perplexity.',
+  },
+  {
+    date: 'Jun 01, 2026',
+    category: 'DESIGN',
+    slug: 'how-to-prepare-design-system-ai-ready',
+    title: 'How to prepare your design system for the AI era',
+    excerpt: 'AI-generated prototypes fail due to lack of structured context, not lack of intelligence. Spec files, token layer and automated auditing — the approach of Atlassian, IBM Carbon and Nordhealth.',
+  },
+];
+
+const topicsEs = [
   'SEO LOCAL', 'GEO', 'IA', 'GOOGLE BUSINESS PROFILE', 'SCHEMA MARKUP',
   'BRANDING', 'DISEÑO', 'ESTRATEGIA', 'CÓDIGO', 'DOMINICANA', 'NEGOCIOS', 'AUDITORÍA',
 ];
 
+const topicsEn = [
+  'LOCAL SEO', 'GEO', 'AI', 'GOOGLE BUSINESS PROFILE', 'SCHEMA MARKUP',
+  'BRANDING', 'DESIGN', 'STRATEGY', 'CODE', 'DOMINICAN REPUBLIC', 'BUSINESS', 'AUDIT',
+];
+
 const POSTS_PER_PAGE = 4;
 
-export default function BlogContent() {
+export default function BlogContent({ locale: propLocale, social }: BlogContentProps = {}) {
+  const locale = propLocale || (typeof document !== 'undefined' ? document.documentElement.lang || 'es' : 'es');
+  const blogPath = locale === 'en' ? '/en/blog' : '/blog';
+  const posts = locale === 'en' ? postsEn : postsEs;
+  const topics = locale === 'en' ? topicsEn : topicsEs;
+
   const [filter, setFilter] = React.useState('ALL');
   const [query, setQuery] = React.useState('');
   const [page, setPage] = React.useState(1);
@@ -94,8 +173,7 @@ export default function BlogContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.1 }}
         >
-          Transmisiones archivadas, esquemas arquitectónicos y actualizaciones del kernel.
-          Escribir como forma de integridad estructural. Sin filler, sin SEO vacío.
+          {t('hero_text', locale)}
         </motion.p>
       </section>
 
@@ -103,13 +181,13 @@ export default function BlogContent() {
       <div className="mb-12 flex flex-col md:flex-row gap-6 items-end justify-between border-b border-dashed border-dashed-cream pb-8">
         <div className="w-full md:w-1/2">
           <div className="flex items-center gap-3 text-w-orange mb-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider">QUERY_PARAMETER</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider">{t('query_param', locale)}</span>
           </div>
           <div className="relative w-full border border-dashed border-dashed-cream focus-within:border-w-orange transition-colors bg-w-void">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-w-muted font-mono text-sm">&gt;</span>
             <input
               className="w-full bg-transparent border-none text-w-cream font-mono text-sm py-3 pl-8 focus:outline-none placeholder:text-w-muted/40"
-              placeholder="buscar_logs..."
+              placeholder={t('buscar_logs', locale)}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -117,7 +195,7 @@ export default function BlogContent() {
           </div>
         </div>
         <div className="flex gap-3 font-mono text-[11px]">
-          <span className="text-w-muted uppercase">FILTRO:</span>
+          <span className="text-w-muted uppercase">{t('filtro', locale)}</span>
           {['ALL', 'DISEÑO', 'ESTRATEGIA', 'SEO', 'GEO', 'IA'].map((f) => (
             <button
               key={f}
@@ -147,7 +225,7 @@ export default function BlogContent() {
                 i > 0 ? 'border-t border-dashed border-dashed-cream' : ''
               }`}
             >
-              <a href={`/blog/${post.slug}`} class="flex flex-col md:flex-row gap-6 items-start w-full no-underline">
+              <a href={`${blogPath}/${post.slug}`} class="flex flex-col md:flex-row gap-6 items-start w-full no-underline">
               <div className="w-36 shrink-0 font-mono text-xs text-w-orange font-bold uppercase">
                 [ {post.date} ]
               </div>
@@ -164,7 +242,7 @@ export default function BlogContent() {
                 </p>
                 <div className="mt-5 flex items-center gap-4">
                   <span className="text-w-orange font-mono text-[11px] uppercase group-hover:translate-x-1 transition-transform duration-200 inline-block">
-                    LEER_POST →
+                    {t('leer_post', locale)}
                   </span>
                   <span className="text-w-muted font-mono text-[10px] uppercase opacity-50">#{post.category}</span>
                 </div>
@@ -183,7 +261,7 @@ export default function BlogContent() {
             disabled={page === 1}
             className="font-mono text-xs text-w-muted hover:text-w-orange uppercase px-3 py-2 border border-dashed border-dashed-cream disabled:opacity-30 disabled:cursor-default transition-colors"
           >
-            ← ANTERIOR
+            {t('anterior', locale)}
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
@@ -205,7 +283,7 @@ export default function BlogContent() {
             disabled={page === totalPages}
             className="font-mono text-xs text-w-muted hover:text-w-orange uppercase px-3 py-2 border border-dashed border-dashed-cream disabled:opacity-30 disabled:cursor-default transition-colors"
           >
-            SIGUIENTE →
+            {t('siguiente', locale)}
           </button>
         </div>
       )}
@@ -214,7 +292,7 @@ export default function BlogContent() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6 font-mono text-[10px] text-w-orange uppercase tracking-widest">
           <span className="w-12 h-px bg-w-orange/40"></span>
-          <span>CATEGORÍAS</span>
+          <span>{t('categorias', locale)}</span>
         </div>
         <div className="flex flex-wrap gap-3">
           {topics.map((topic) => (
@@ -232,30 +310,30 @@ export default function BlogContent() {
       <section className="max-w-2xl mx-auto text-center py-12 border-t border-dashed border-dashed-cream">
         <BrutalBox className="p-8 md:p-10">
           <div className="flex items-center gap-2 mb-4 justify-center">
-            <span className="font-mono text-[10px] text-w-orange uppercase tracking-widest font-bold">SUSCRÍBETE</span>
+            <span className="font-mono text-[10px] text-w-orange uppercase tracking-widest font-bold">{t('suscribete', locale)}</span>
           </div>
           <h3 className="font-display text-2xl sm:text-3xl text-w-cream uppercase mb-3">
-            RECIBIR ACTUALIZACIONES
+            {t('recibir', locale)}
           </h3>
           <p className="font-mono text-sm text-w-muted mb-6 leading-relaxed">
-            Baja frecuencia. Alta densidad. Sin spam. Solo ideas que mueven la aguja.
+            {t('baja_frec', locale)}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-2 p-1 border border-dashed border-dashed-cream bg-w-void focus-within:border-w-orange transition-colors">
             <input
               className="flex-grow bg-transparent border-none focus:outline-none font-mono text-sm text-w-cream placeholder:text-w-muted/40 uppercase px-3 py-2"
-              placeholder="USUARIO@DOMINIO.COM"
+              placeholder={t('placeholder_email', locale)}
               type="email"
             />
             <button className="bg-w-orange text-w-black px-6 py-3 font-mono font-bold text-xs uppercase border-2 border-w-orange shadow-[3px_3px_0px_#F5EFE0] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-150 shrink-0">
-              SUSCRIBIRSE
+              {t('suscribirse', locale)}
             </button>
           </div>
 
           <div className="mt-4 flex justify-center gap-4 font-mono text-[10px] text-w-muted uppercase">
-            <a href="https://instagram.com/byenki" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">INSTAGRAM</a>
+            <a href={`https://instagram.com/${social?.instagram || 'byenki'}`} target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">INSTAGRAM</a>
             <span className="text-w-orange/40">/</span>
-            <a href="https://linkedin.com/company/byenki" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">LINKEDIN</a>
+            <a href={`https://linkedin.com/company/${social?.linkedin || 'byenki'}`} target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">LINKEDIN</a>
           </div>
         </BrutalBox>
       </section>

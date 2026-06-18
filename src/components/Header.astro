@@ -1,20 +1,36 @@
 ---
-// Header con menú dropdown terminal-style
+import { t, type Lang } from '../i18n/ui';
+import theme from '../../theme.config';
+
+export interface Props {
+  locale?: Lang;
+}
+
+const { locale = 'es' as Lang } = Astro.props as Props;
+const localePrefix = locale === 'en' ? '/en' : '';
+const altLocale = locale === 'es' ? 'en' : 'es';
+const altPrefix = altLocale === 'en' ? '/en' : '';
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const altPath = altLocale === 'es'
+  ? currentPath.replace(/^\/en/, '') || '/'
+  : altPrefix + (currentPath === '/' ? '' : currentPath);
+const blogPath = localePrefix + '/blog';
+const aboutPath = localePrefix + '/about';
 ---
 
-<header class="worca-header" id="siteHeader" transition:name="site-header" transition:persist>
+<header class="worca-header" id="siteHeader" style={`--logo-font: "${theme.logoFont}"`}>
   <div class="worca-header-inner">
-    <a href="/" class="worca-header-logo" id="header-logo" aria-label="By Enki">
-      <span class="worca-header-text-logo">by/enki<span class="enki-cursor">_</span></span>
+    <a href={localePrefix + '/'} class="worca-header-logo" id="header-logo" aria-label={theme.name}>
+      <span class="worca-header-text-logo">{theme.logo.replace('_', '')}<span class="enki-cursor">_</span></span>
     </a>
 
     <nav class="worca-header-nav">
-      <a href="/" class="worca-nav-link">INICIO</a>
+      <a href={localePrefix + '/'} class="worca-nav-link">{t('nav.home', locale)}</a>
 
       <!-- Categorías dropdown -->
       <div class="worca-dropdown">
         <button class="worca-dropdown-toggle">
-          CATEGORÍAS
+          {t('nav.categorias', locale)}
           <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="worca-dropdown-menu">
@@ -22,15 +38,15 @@
             <span class="worca-term-dot red"></span>
             <span class="worca-term-dot yellow"></span>
             <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">categorias@blog:~/</span>
+            <span class="worca-term-path">{t('nav.categorias_term', locale)}</span>
           </div>
           <div class="worca-term-body">
             <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./categorias/</span></div>
-            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> SEO y Posicionamiento<span class="worca-term-status">ACTIVO</span></a>
-            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Diseño y Tecnología<span class="worca-term-status">ACTIVO</span></a>
-            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Estrategia Digital<span class="worca-term-status">ACTIVO</span></a>
-            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Negocios y Emprendimiento<span class="worca-term-status">ACTIVO</span></a>
-            <a href="/blog" class="worca-term-line"><span class="worca-term-gt">></span> Inteligencia Artificial<span class="worca-term-status">ACTIVO</span></a>
+            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> SEO y Posicionamiento<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Diseño y Tecnología<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Estrategia Digital<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Negocios y Emprendimiento<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Inteligencia Artificial<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
             <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
           </div>
         </div>
@@ -39,7 +55,7 @@
       <!-- Recursos dropdown -->
       <div class="worca-dropdown">
         <button class="worca-dropdown-toggle">
-          RECURSOS
+          {t('nav.recursos', locale)}
           <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="worca-dropdown-menu">
@@ -47,14 +63,14 @@
             <span class="worca-term-dot red"></span>
             <span class="worca-term-dot yellow"></span>
             <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">recursos@blog:~/</span>
+            <span class="worca-term-path">{t('nav.recursos_term', locale)}</span>
           </div>
           <div class="worca-term-body">
             <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./recursos/</span></div>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Guías Gratuitas<span class="worca-term-status">PRÓXIMO</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Plantillas y Templates<span class="worca-term-status">PRÓXIMO</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Herramientas Recomendadas<span class="worca-term-status">PRÓXIMO</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Checklist de Auditoría<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.guias', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.plantillas', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.herramientas', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.checklist', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
             <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
           </div>
         </div>
@@ -63,7 +79,7 @@
       <!-- Sobre dropdown -->
       <div class="worca-dropdown">
         <button class="worca-dropdown-toggle">
-          SOBRE
+          {t('nav.sobre', locale)}
           <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="worca-dropdown-menu">
@@ -71,25 +87,25 @@
             <span class="worca-term-dot red"></span>
             <span class="worca-term-dot yellow"></span>
             <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">about@byenki:~/</span>
+            <span class="worca-term-path">{t('nav.sobre_term', locale)}</span>
           </div>
           <div class="worca-term-body">
             <div class="worca-term-prompt">$ <span class="worca-term-cmd">cat ./README.md</span></div>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Quiénes Somos<span class="worca-term-status">PRÓXIMO</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> El Estudio<span class="worca-term-status">PRÓXIMO</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> Contacto<span class="worca-term-status">PRÓXIMO</span></a>
+            <a href={aboutPath} class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.quienes', locale)}<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.estudio', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
+            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.contacto', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
             <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
           </div>
         </div>
       </div>
 
-      <a href="/blog" class="worca-nav-link">ARCHIVO</a>
+      <a href={blogPath} class="worca-nav-link">{t('nav.archivo', locale)}</a>
 
       <button id="theme-toggle" class="worca-theme-toggle" aria-label="Cambiar tema">
         <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         <svg class="worca-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
-      <button id="lang-toggle" class="worca-lang-toggle" aria-label="Cambiar idioma">ES</button>
+      <a href={altPath} id="lang-toggle" class="worca-lang-toggle">{locale.toUpperCase()}</a>
     </nav>
 
     <button class="worca-mobile-toggle" id="worcaMobileToggle" aria-label="Menú">
@@ -99,30 +115,30 @@
   </div>
 
   <div class="worca-mobile-menu" id="worcaMobileMenu">
-    <a href="/" class="worca-mobile-nav-link">INICIO</a>
-    <div class="worca-mobile-section-label">CATEGORÍAS</div>
-    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> SEO y Posicionamiento</a>
-    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Diseño y Tecnología</a>
-    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Estrategia Digital</a>
-    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Negocios y Emprendimiento</a>
-    <a href="/blog" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Inteligencia Artificial</a>
-    <div class="worca-mobile-section-label">RECURSOS</div>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Guías Gratuitas</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Plantillas y Templates</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Herramientas</a>
-    <div class="worca-mobile-section-label">SOBRE</div>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Quiénes Somos</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Contacto</a>
-    <a href="/blog" class="worca-mobile-nav-link">ARCHIVO</a>
+    <a href={localePrefix + '/'} class="worca-mobile-nav-link">{t('nav.home', locale)}</a>
+    <div class="worca-mobile-section-label">{t('nav.mobile_categorias', locale)}</div>
+    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> SEO y Posicionamiento</a>
+    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Diseño y Tecnología</a>
+    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Estrategia Digital</a>
+    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Negocios y Emprendimiento</a>
+    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Inteligencia Artificial</a>
+    <div class="worca-mobile-section-label">{t('nav.mobile_recursos', locale)}</div>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.guias', locale)}</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.plantillas', locale)}</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.herramientas', locale)}</a>
+    <div class="worca-mobile-section-label">{t('nav.mobile_sobre', locale)}</div>
+    <a href={aboutPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.quienes', locale)}</a>
+    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.contacto', locale)}</a>
+    <a href={blogPath} class="worca-mobile-nav-link">{t('nav.archivo', locale)}</a>
     <button id="theme-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar tema">
       <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <svg class="worca-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-      <span class="worca-mobile-theme-label">TEMA</span>
+      <span class="worca-mobile-theme-label">{t('nav.tema', locale)}</span>
     </button>
-    <button id="lang-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar idioma">
-      ES
-      <span class="worca-mobile-theme-label">IDIOMA</span>
-    </button>
+    <a href={altPath} id="lang-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar idioma">
+      {locale.toUpperCase()}
+      <span class="worca-mobile-theme-label">{t('nav.idioma', locale)}</span>
+    </a>
   </div>
 </header>
 
@@ -190,27 +206,6 @@
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     if (!localStorage.getItem('theme')) applyTheme(null);
   });
-
-  // Language toggle
-  function setLang(lang: string) {
-    document.documentElement.lang = lang;
-    localStorage.setItem('lang', lang);
-    const btns = [document.getElementById('lang-toggle'), document.getElementById('lang-toggle-mobile')];
-    btns.forEach(b => { if (b) b.textContent = lang.toUpperCase(); });
-  }
-
-  function toggleLang() {
-    const current = document.documentElement.lang || 'es';
-    setLang(current === 'es' ? 'en' : 'es');
-  }
-
-  (function() {
-    const saved = localStorage.getItem('lang');
-    if (saved) setLang(saved);
-  })();
-
-  document.getElementById('lang-toggle')?.addEventListener('click', toggleLang);
-  document.getElementById('lang-toggle-mobile')?.addEventListener('click', toggleLang);
 </script>
 
 <style>
@@ -237,7 +232,7 @@
   /* Logo */
   .worca-header-logo { display: block; line-height: 1; flex-shrink: 0; text-decoration: none; }
   .worca-header-text-logo {
-    font-family: "Sora", sans-serif;
+    font-family: var(--logo-font, "Sora"), sans-serif;
     font-size: 1.1rem;
     letter-spacing: -0.04em;
     font-weight: 700;

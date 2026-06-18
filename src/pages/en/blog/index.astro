@@ -1,15 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import BlogContent from '../../components/react/BlogContent';
-import { t, type Lang } from '../../i18n/ui';
-import theme from '../../../theme.config';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogContent from '../../../components/react/BlogContent';
+import { t } from '../../../i18n/ui';
+import theme from '../../../../theme.config';
 
-const locale = (Astro.currentLocale || 'es') as Lang;
-const site = theme.domain;
-const localePrefix = locale === 'en' ? '/en' : '';
-const blogUrl = `${site}${localePrefix}/blog`;
+const locale = "en" as const;
 ---
 
 <BaseLayout
@@ -19,15 +16,6 @@ const blogUrl = `${site}${localePrefix}/blog`;
 >
   <Fragment slot="head">
     <meta name="keywords" content={t('blog.keywords', locale)} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "@id": `${blogUrl}#collection`,
-      "name": t('blog.schema_name', locale),
-      "description": t('blog.schema_description', locale),
-      "url": blogUrl,
-      "about": { "@type": "Thing", "name": t('blog.schema_about', locale) }
-    })} />
   </Fragment>
   <Header locale={locale} />
   <main class="min-h-screen bg-w-black text-w-cream relative">

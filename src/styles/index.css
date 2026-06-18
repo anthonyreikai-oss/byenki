@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* ── IMPORTANT: Sync values with theme.config.ts ──
+   When customizing a new instance, edit theme.config.ts first,
+   then update the @theme block below to match.
+   Fonts, colors, accent must match between both files.
+*/
 @theme {
   --font-display: "Anton", sans-serif;
   --font-accent: "Syne", sans-serif;

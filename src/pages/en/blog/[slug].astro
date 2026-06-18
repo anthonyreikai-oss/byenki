@@ -1,9 +1,9 @@
 ---
-import { getBlogPosts } from "../../data/blog";
-import PostLayout from "../../layouts/PostLayout.astro";
+import { getBlogPosts } from "../../../data/blog";
+import PostLayout from "../../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getBlogPosts("es");
+  const posts = await getBlogPosts("en");
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -13,12 +13,12 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const allPosts = await getBlogPosts("es");
+const allPosts = await getBlogPosts("en");
 const idx = allPosts.findIndex((p) => p.slug === post.slug);
 const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
 const nextPost = idx > 0 ? allPosts[idx - 1] : null;
 ---
 
-<PostLayout post={post} prevPost={prevPost} nextPost={nextPost} locale="es">
+<PostLayout post={post} prevPost={prevPost} nextPost={nextPost} locale="en">
   <Content />
 </PostLayout>

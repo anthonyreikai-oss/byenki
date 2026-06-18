@@ -3,30 +3,37 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { getBlogPosts, formatDate, isoDate, getAllTags, type BlogPost } from "../data/blog";
+import { t, type Lang } from "../i18n/ui";
+import theme from "../../theme.config";
 
 export interface Props {
   post: BlogPost;
   prevPost?: BlogPost | null;
   nextPost?: BlogPost | null;
+  locale?: Lang;
 }
 
-const { post, prevPost = null, nextPost = null } = Astro.props;
+const { post, prevPost = null, nextPost = null, locale = 'es' as Lang } = Astro.props as Props;
 const fm = post.data;
-const title = fm.titulo || "Artículo";
+const title = fm.titulo || "Article";
 const description = fm.meta_descripcion || "";
 const readTime = fm.tiempo_lectura || "";
 const category = fm.categoria || "GENERAL";
 const tags = fm.etiquetas || [];
-const displayDate = formatDate(fm.fecha);
+const displayDate = formatDate(fm.fecha, locale);
 const publishedISO = isoDate(fm.fecha);
-const author = fm.autor || "By Enki";
+const author = fm.autor || theme.name;
 
-const allPosts = await getBlogPosts();
-const sidebarPosts = allPosts.slice(0, 3);
-const allTags = getAllTags(allPosts);
+const allPosts = await getBlogPosts(locale);
+const sidebarPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+const allTags = getAllTags(allPosts, locale);
 
-const site = "https://byenki.dev";
-const postUrl = `${site}/blog/${post.slug}`;
+const site = theme.domain;
+const localePrefix = locale === 'en' ? '/en' : '';
+const blogPath = `${localePrefix}/blog`;
+const postUrl = `${site}${blogPath}/${post.slug}`;
+
+const postLang = fm.lang || locale;
 
 const blogPostingSchema = {
   "@context": "https://schema.org",
@@ -37,27 +44,32 @@ const blogPostingSchema = {
   datePublished: publishedISO,
   dateModified: publishedISO,
   author: { "@type": "Organization", "@id": `${site}#organization`, name: author, url: site },
-  publisher: { "@type": "Organization", "@id": `${site}#organization`, name: "By Enki", url: site, logo: { "@type": "ImageObject", url: `${site}/logo-one.svg` } },
+  publisher: { "@type": "Organization", "@id": `${site}#organization`, name: theme.name, url: site, logo: { "@type": "ImageObject", url: `${site}/logo-one.svg` } },
   image: `${site}/og-image.png`,
   url: postUrl,
   mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
-  inLanguage: "es",
+  inLanguage: postLang === 'en' ? 'en' : 'es',
   about: category,
   keywords: fm.palabras_clave || "",
 };
 
+const breadcrumbHome = t('footer.inicio', locale);
+const breadcrumbBlog = t('nav.archivo', locale);
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: site },
-    { "@type": "ListItem", position: 2, name: "Blog", item: `${site}/blog` },
+    { "@type": "ListItem", position: 1, name: breadcrumbHome, item: `${site}${localePrefix}` },
+    { "@type": "ListItem", position: 2, name: breadcrumbBlog, item: `${site}${blogPath}` },
     { "@type": "ListItem", position: 3, name: title, item: postUrl },
   ],
 };
+
+const aboutHref = localePrefix + '/about';
+const aboutText = t('index.about_link', locale);
 ---
 
-<BaseLayout title={`${title} — Blog | By Enki`} description={description}>
+<BaseLayout title={`${title} — ${t('nav.archivo', locale)} | ${theme.name}`} description={description} locale={locale}>
   <Fragment slot="head">
     <meta name="keywords" content={fm.palabras_clave || ""} />
     {readTime && <meta name="article:reading_time" content={readTime} />}
@@ -72,7 +84,7 @@ const breadcrumbSchema = {
   <!-- Reading progress bar -->
   <div id="progress-bar" class="progress-bar"></div>
 
-  <Header />
+  <Header locale={locale} />
   <main class="min-h-screen bg-w-black text-w-cream relative">
     <!-- Brutalist dashed grid background -->
     <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-5">
@@ -85,8 +97,8 @@ const breadcrumbSchema = {
 
     <div class="relative z-10 max-w-screen-xl mx-auto px-4 md:px-6 pt-8 pb-16">
       <div class="flex items-center justify-between mb-8">
-          <a href="/about" class="inline-flex items-center gap-2 font-mono text-xs text-w-muted hover:text-w-orange transition-colors">
-            Hi, mi nombre es Enki.
+          <a href={aboutHref} class="inline-flex items-center gap-2 font-mono text-xs text-w-muted hover:text-w-orange transition-colors">
+            {aboutText}
           </a>
         <span class="font-mono text-[10px] uppercase tracking-widest text-w-muted">{readTime}</span>
       </div>
@@ -96,15 +108,15 @@ const breadcrumbSchema = {
         <aside class="hidden lg:block w-52 shrink-0" transition:name="post-sidebar">
           <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
             <div class="flex flex-col gap-1.5" id="toc-sidebar-section">
-              <span class="font-mono text-w-orange uppercase tracking-widest text-[10px] mb-1">EN ESTE ENSAYO</span>
+              <span class="font-mono text-w-orange uppercase tracking-widest text-[10px] mb-1">{t('sidebar.en_este_ensayo', locale)}</span>
               <div id="toc-sidebar-list"></div>
             </div>
 
             <div class="flex flex-col gap-1.5" id="sidebar-posts">
-              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">ÚLTIMOS ENSAYOS</span>
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">{t('sidebar.ultimos_ensayos', locale)}</span>
               {sidebarPosts.map((p) => (
                 <a
-                  href={`/blog/${p.slug}`}
+                  href={`${blogPath}/${p.slug}`}
                   data-astro-prefetch="hover"
                   class={`block leading-relaxed transition-colors${p.slug === post.slug ? ' text-w-orange font-bold' : ' text-w-muted hover:text-w-cream'}`}
                   style="font-size:11px"
@@ -113,20 +125,20 @@ const breadcrumbSchema = {
                 </a>
               ))}
               {allPosts.length > 3 && (
-                <a href="/blog" class="text-w-muted hover:text-w-orange transition-colors mt-1" style="font-size:10px">
-                  +{allPosts.length - 3} más →
+                <a href={blogPath} class="text-w-muted hover:text-w-orange transition-colors mt-1" style="font-size:10px">
+                  +{allPosts.length - 3} {locale === 'en' ? 'more' : 'más'} →
                 </a>
               )}
-              <a href="/blog" class="text-w-orange hover:text-w-cream transition-colors uppercase" style="font-size:10px">
-                Leer más ensayos →
+              <a href={blogPath} class="text-w-orange hover:text-w-cream transition-colors uppercase" style="font-size:10px">
+                {t('sidebar.leer_mas', locale)}
               </a>
             </div>
 
             <div class="flex flex-col gap-1.5">
-              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">CATEGORÍAS</span>
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">{t('sidebar.categorias', locale)}</span>
               <div class="flex flex-wrap gap-1">
                 {allTags.slice(0, 6).map((tag) => (
-                  <a href={`/blog`} class="text-[9px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{tag}</a>
+                  <a href={blogPath} class="text-[9px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{tag}</a>
                 ))}
               </div>
             </div>
@@ -141,7 +153,7 @@ const breadcrumbSchema = {
               <span class="inline-block w-4 h-4 border border-w-orange/40 relative">
                 <span class="absolute inset-0 flex items-center justify-center text-[10px] toc-icon">+</span>
               </span>
-              ÍNDICE
+              {t('sidebar.indice', locale)}
             </summary>
             <div class="mt-4 flex flex-col gap-1.5 pl-6" id="toc-mobile-list"></div>
           </details>
@@ -153,7 +165,7 @@ const breadcrumbSchema = {
               {readTime && (
                 <>
                   <span class="text-w-muted">·</span>
-                  <span class="text-w-muted">{readTime} de lectura</span>
+                  <span class="text-w-muted">{readTime} {t('index.reading_time', locale)}</span>
                 </>
               )}
             </div>
@@ -202,14 +214,14 @@ const breadcrumbSchema = {
           <!-- Prev / Next nav -->
           <nav class="mt-12 pt-8 border-t border-dashed border-dashed-cream flex flex-col sm:flex-row gap-4 justify-between font-mono text-xs">
             {prevPost ? (
-              <a href={`/blog/${prevPost.slug}`} class="group flex-1 min-w-0">
-                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">← ANTERIOR</span>
+              <a href={`${blogPath}/${prevPost.slug}`} class="group flex-1 min-w-0">
+                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">{t('post.prev', locale)}</span>
                 <span class="block leading-relaxed text-w-muted group-hover:text-w-orange transition-colors truncate">{prevPost.data.titulo}</span>
               </a>
             ) : <div class="flex-1" />}
             {nextPost ? (
-              <a href={`/blog/${nextPost.slug}`} class="group flex-1 min-w-0 text-right">
-                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">SIGUIENTE →</span>
+              <a href={`${blogPath}/${nextPost.slug}`} class="group flex-1 min-w-0 text-right">
+                <span class="block text-[10px] uppercase tracking-widest text-w-muted mb-1">{t('post.next', locale)}</span>
                 <span class="block leading-relaxed text-w-muted group-hover:text-w-orange transition-colors truncate">{nextPost.data.titulo}</span>
               </a>
             ) : <div class="flex-1" />}
@@ -218,11 +230,7 @@ const breadcrumbSchema = {
       </div>
     </div>
   </main>
-  <Footer />
-
-  <button id="jump-to-top" class="jump-to-top" aria-label="Volver arriba">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
-  </button>
+  <Footer locale={locale} />
 </BaseLayout>
 
 <script>
@@ -307,16 +315,6 @@ const breadcrumbSchema = {
   document.querySelectorAll('.prose img').forEach(img => {
     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
   });
-
-  // ── Jump to top ──
-  (function() {
-    const btn = document.getElementById('jump-to-top');
-    if (!btn) return;
-    const update = () => btn.classList.toggle('hidden', window.scrollY < 400);
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  })();
 </script>
 
 <style>
@@ -336,7 +334,7 @@ const breadcrumbSchema = {
   #toc-mobile summary { list-style: none; }
   #toc-mobile[open] summary .toc-icon { opacity: 0; }
   #toc-mobile[open] summary span:nth-child(1)::after {
-    content: '−';
+    content: '\2212';
     position: absolute;
     inset: 0;
     display: flex;
@@ -353,26 +351,6 @@ const breadcrumbSchema = {
     justify-content: center;
     font-size: 10px;
   }
-
-  .jump-to-top {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-w-orange);
-    background: var(--color-w-black);
-    color: var(--color-w-orange);
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s, transform 0.2s;
-    z-index: 99;
-  }
-  .jump-to-top:hover { opacity: 1; transform: translateY(-2px); }
-  .jump-to-top.hidden { opacity: 0; pointer-events: none; }
 
   @keyframes enkiBlink {
     0%, 100% { opacity: 1; }

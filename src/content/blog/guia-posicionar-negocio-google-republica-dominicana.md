@@ -1,6 +1,7 @@
 ---
 titulo: "¿Cómo posicionar tu negocio en Google si estás en República Dominicana? — Guía paso a paso"
 fecha: 2026-06-15
+lang: es
 autor: By Enki
 categoria: SEO Local
 etiquetas:

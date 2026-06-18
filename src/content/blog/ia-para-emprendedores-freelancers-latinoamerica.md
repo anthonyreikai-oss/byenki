@@ -1,6 +1,7 @@
 ---
 titulo: "¿Cómo puede un freelancer o emprendedor en Latinoamérica usar la IA para hacer crecer su negocio en 2026?"
 fecha: 2026-06-08
+lang: es
 autor: By Enki
 categoria: Tecnología y Negocios
 etiquetas:

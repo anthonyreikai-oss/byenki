@@ -1,15 +1,21 @@
 ---
 import '../styles/index.css';
-import { ViewTransitions } from 'astro:transitions';
+import { t, type Lang } from '../i18n/ui';
+import theme from '../../theme.config';
 
-const { title = 'By Enki | Blog de Diseño Web y Estrategia Digital', description = 'Blog de diseño web, branding y estrategia digital en Santo Domingo. Artículos sobre WordPress, SEO local, diseño con IA y brutalismo digital.' } = Astro.props;
-const site = 'https://byenki.dev';
-const rawPath = Astro.url.pathname === '/' ? '' : Astro.url.pathname.replace(/\/$/, '');
+const { title: propTitle, description: propDescription, locale = 'es' as Lang } = Astro.props as { title?: string; description?: string; locale?: Lang };
+const defaultTitle = t('site.title', locale);
+const defaultDescription = t('site.description', locale);
+const title = propTitle || defaultTitle;
+const description = propDescription || defaultDescription;
+const site = theme.domain;
+const rawPath = Astro.url.pathname.replace(/\/$/, '') || '';
 const canonical = rawPath ? `${site}${rawPath}` : site;
+const ogLocale = locale === 'en' ? 'en_US' : 'es_DO';
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale === 'en' ? 'en' : 'es'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,21 +31,21 @@ const canonical = rawPath ? `${site}${rawPath}` : site;
     </script>
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MVH73VX2');</script>
+    })(window,document,'script','dataLayer','${theme.gtm}');`} />
     <!-- End Google Tag Manager -->
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="By Enki" />
+    <meta name="author" content={theme.name} />
 
     <link rel="stylesheet" href="/fonts/fonts.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Clash+Display:wght@400;500;600;700&family=Archivo+Black&family=Sora:wght@400;600;700;800&family=DM+Serif+Display&family=Instrument+Serif&family=Cabinet+Grotesk:wght@400;500;700;800&family=Unbounded:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href={`https://fonts.googleapis.com/css2?family=${theme.googleFonts}`} rel="stylesheet">
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/logo-one.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -49,8 +55,8 @@ const canonical = rawPath ? `${site}${rawPath}` : site;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content="By Enki" />
-    <meta property="og:locale" content="es_DO" />
+    <meta property="og:site_name" content={theme.name} />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content={`${site}/og-image.png`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -62,20 +68,18 @@ const canonical = rawPath ? `${site}${rawPath}` : site;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${site}/og-image.png`} />
 
-    <ViewTransitions />
-
     <!-- Schema.org Organization + LocalBusiness -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": ["Organization", "LocalBusiness"],
-      "@id": "https://byenki.dev",
-      "name": "By Enki",
-      "url": "https://byenki.dev",
-      "email": "hello@byenki.dev",
-      "logo": "https://byenki.dev/logo-one.svg",
-      "image": "https://byenki.dev/logo-one.svg",
-      "telephone": "+18099976950",
-      "description": "Estudio de diseño web en Santo Domingo, República Dominicana. Creamos páginas web estratégicas que convierten visitantes en clientes.",
+      "@id": site,
+      "name": theme.name,
+      "url": site,
+      "email": theme.social.email,
+      "logo": `${site}/logo-one.svg`,
+      "image": `${site}/logo-one.svg`,
+      "telephone": `+${theme.social.whatsapp}`,
+      "description": t('site.schema_description', locale),
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Santo Domingo",
@@ -87,7 +91,7 @@ const canonical = rawPath ? `${site}${rawPath}` : site;
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MVH73VX2"
+    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${theme.gtm}`}
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <slot />

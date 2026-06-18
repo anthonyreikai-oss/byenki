@@ -1,49 +1,24 @@
 ---
-// Footer simplificado — solo Blog
+import { t, type Lang } from '../i18n/ui';
+import theme from '../../theme.config';
+
+export interface Props {
+  locale?: Lang;
+}
+
+const { locale = 'es' as Lang } = Astro.props as Props;
+const blogPath = locale === 'en' ? '/en/blog' : '/blog';
 ---
 
-<footer class="worca-footer" id="siteFooter" transition:name="site-footer" transition:persist>
+<footer class="worca-footer" id="siteFooter">
   <div class="worca-footer-inner">
-    <div class="worca-footer-grid">
-      <div class="worca-footer-brand">
-        <div>
-          <div class="worca-footer-logo">
-            <span class="worca-footer-text-logo">by/enki<span class="enki-cursor">_</span></span>
-          </div>
-          <p class="worca-footer-tagline">
-            Blog de diseño web, branding y estrategia digital.<br />
-            Escritos sobre WordPress, SEO local, diseño con IA<br />
-            y brutalismo digital. Santo Domingo, RD.
-          </p>
-        </div>
-      </div>
-
-      <div class="worca-footer-col">
-        <p class="worca-footer-col-heading">// Navegación</p>
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li><a href="/blog">Archivo</a></li>
-        </ul>
-      </div>
-
-      <div class="worca-footer-col">
-        <p class="worca-footer-col-heading">// Contacto</p>
-        <ul>
-          <li><span class="worca-footer-email">hello@byenki.dev</span></li>
-          <li><a href="https://wa.me/18099976950" target="_blank" rel="noreferrer">WhatsApp</a></li>
-          <li><a href="https://linkedin.com/company/byenki" target="_blank" rel="noreferrer">LinkedIn</a></li>
-          <li><a href="https://instagram.com/byenki" target="_blank" rel="noreferrer">Instagram</a></li>
-        </ul>
-      </div>
-    </div>
-
     <div class="worca-footer-bottom">
       <div class="worca-footer-copy">
-        <span>&copy; <span id="worcaYear">2026</span> By Enki. A <a href="https://www.byenki.com" target="_blank" rel="noreferrer" class="worca-enki-link">by enki project</a>.</span>
+        <span>&copy; <span id="worcaYear">2026</span> {theme.name}. <a href={theme.credit.url} target="_blank" rel="noreferrer" class="worca-enki-link">{theme.credit.text}</a></span>
       </div>
 
       <button class="worca-btn-top" id="btnTop">
-        VOLVER ARRIBA
+          {t('footer.volver_arriba', locale)}
         <svg class="worca-arrow-up" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="19" x2="12" y2="5"></line>
           <polyline points="5 12 12 5 19 12"></polyline>
@@ -67,69 +42,17 @@
     color: var(--color-w-cream);
   }
   .worca-footer-inner {
-    max-width: 1600px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 3rem 1rem 1.5rem;
+    padding: 1.5rem 1rem;
   }
-  .worca-footer-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-  @media (min-width: 768px) {
-    .worca-footer-grid {
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 3rem;
-    }
-  }
-  .worca-footer-brand { display: flex; }
-  .worca-footer-logo-img { width: 90px; height: 90px; display: block; margin-bottom: 1rem; }
-  .worca-footer-text-logo {
-    font-family: "Sora", sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: -0.04em;
-    font-weight: 700;
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
-    color: var(--color-w-cream);
-    display: block;
-    line-height: 0.85;
-    margin-bottom: 0.75rem;
-  }
-  .worca-footer-tagline {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    line-height: 1.7;
-    color: var(--color-w-muted);
-    margin: 0;
-  }
-  .worca-footer-col-heading {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-w-orange);
-    margin: 0 0 1rem;
-  }
-  .worca-footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-  .worca-footer-col a, .worca-footer-email {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    color: var(--color-w-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .worca-footer-col a:hover { color: var(--color-w-cream); }
-
   .worca-footer-bottom {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px dashed color-mix(in srgb, var(--color-w-cream) 10%, transparent);
+    align-items: center;
   }
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     .worca-footer-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
   }
   .worca-footer-copy {
@@ -155,17 +78,6 @@
     padding: 0.5rem 0.9rem;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
-    align-self: flex-start;
   }
-  @media (min-width: 640px) { .worca-btn-top { align-self: auto; } }
   .worca-btn-top:hover { background: var(--color-w-orange); color: var(--color-w-black); }
-
-  @keyframes ftrBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  .enki-cursor {
-    animation: ftrBlink 1s step-end infinite;
-    color: var(--color-w-orange);
-  }
 </style>

@@ -1,6 +1,7 @@
 ---
 titulo: "¿Tu página web está lista para el futuro sin buscadores tradicionales? — Auditoría de preparación GEO para 2026"
 fecha: 2026-06-05
+lang: es
 autor: By Enki
 categoria: SEO y Estrategia Digital
 etiquetas:

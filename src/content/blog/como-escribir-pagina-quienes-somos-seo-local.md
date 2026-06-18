@@ -1,6 +1,7 @@
 ---
 titulo: "¿Cómo escribir una página de 'Quiénes Somos' que atraiga clientes locales y mejore tu SEO?"
 fecha: 2026-06-12
+lang: es
 autor: By Enki
 categoria: Estrategia Digital
 etiquetas:
