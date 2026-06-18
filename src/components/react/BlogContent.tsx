@@ -214,7 +214,7 @@ export default function BlogContent() {
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6 font-mono text-[10px] text-w-orange uppercase tracking-widest">
           <span className="w-12 h-px bg-w-orange/40"></span>
-          <span>TEMAS</span>
+          <span>CATEGORÍAS</span>
         </div>
         <div className="flex flex-wrap gap-3">
           {topics.map((topic) => (
@@ -253,9 +253,9 @@ export default function BlogContent() {
           </div>
 
           <div className="mt-4 flex justify-center gap-4 font-mono text-[10px] text-w-muted uppercase">
-            <a href="https://instagram.com/creadoporone" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">INSTAGRAM</a>
+            <a href="https://instagram.com/byenki" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">INSTAGRAM</a>
             <span className="text-w-orange/40">/</span>
-            <a href="https://linkedin.com/company/creadoporone" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">LINKEDIN</a>
+            <a href="https://linkedin.com/company/byenki" target="_blank" rel="noreferrer" className="hover:text-w-orange transition-colors">LINKEDIN</a>
           </div>
         </BrutalBox>
       </section>

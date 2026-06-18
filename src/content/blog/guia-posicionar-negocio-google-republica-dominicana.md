@@ -1,7 +1,7 @@
 ---
 titulo: "¿Cómo posicionar tu negocio en Google si estás en República Dominicana? — Guía paso a paso"
 fecha: 2026-06-15
-autor: Creado por ONE
+autor: By Enki
 categoria: SEO Local
 etiquetas:
   - google business profile
@@ -323,4 +323,4 @@ El momento de actuar es ahora. Cada día que tu perfil está incompleto, tu comp
 
 ---
 
-*En **Creado por ONE** ayudamos a negocios en Santo Domingo y toda República Dominicana a construir una presencia digital que realmente vende. Desde optimización de Google Business Profile y SEO local hasta sitios web profesionales con datos estructurados. [Cotiza tu proyecto](/cotizador/) y recibe una propuesta en 24 horas.*
+*En **By Enki** ayudamos a negocios en Santo Domingo y toda República Dominicana a construir una presencia digital que realmente vende. Desde optimización de Google Business Profile y SEO local hasta sitios web profesionales con datos estructurados. [Cotiza tu proyecto](/cotizador/) y recibe una propuesta en 24 horas.*

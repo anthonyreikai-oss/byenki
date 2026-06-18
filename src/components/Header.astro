@@ -4,7 +4,7 @@
 
 <header class="worca-header" id="siteHeader" transition:name="site-header" transition:persist>
   <div class="worca-header-inner">
-    <a href="/" class="worca-header-logo" id="header-logo" aria-label="Creado por ONE">
+    <a href="/" class="worca-header-logo" id="header-logo" aria-label="By Enki">
       <span class="worca-header-text-logo">by/enki<span class="enki-cursor">_</span></span>
     </a>
 
@@ -71,7 +71,7 @@
             <span class="worca-term-dot red"></span>
             <span class="worca-term-dot yellow"></span>
             <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">about@one:~/</span>
+            <span class="worca-term-path">about@byenki:~/</span>
           </div>
           <div class="worca-term-body">
             <div class="worca-term-prompt">$ <span class="worca-term-cmd">cat ./README.md</span></div>
@@ -83,7 +83,7 @@
         </div>
       </div>
 
-      <a href="/blog" class="worca-nav-link">BLOG</a>
+      <a href="/blog" class="worca-nav-link">ARCHIVO</a>
 
       <button id="theme-toggle" class="worca-theme-toggle" aria-label="Cambiar tema">
         <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -113,7 +113,7 @@
     <div class="worca-mobile-section-label">SOBRE</div>
     <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Quiénes Somos</a>
     <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Contacto</a>
-    <a href="/blog" class="worca-mobile-nav-link">BLOG</a>
+    <a href="/blog" class="worca-mobile-nav-link">ARCHIVO</a>
     <button id="theme-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar tema">
       <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <svg class="worca-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
@@ -227,7 +227,7 @@
   .worca-header-inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0.25rem 1rem;
+    padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -237,9 +237,12 @@
   /* Logo */
   .worca-header-logo { display: block; line-height: 1; flex-shrink: 0; text-decoration: none; }
   .worca-header-text-logo {
-    font-family: "Anton", sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: -0.03em;
+    font-family: "Sora", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
     color: var(--color-w-cream);
     transition: opacity 0.25s ease;
     display: block;
@@ -247,7 +250,7 @@
   }
   .worca-header-logo:hover .worca-header-text-logo { opacity: 0.8; }
   @media (min-width: 768px) {
-    .worca-header-text-logo { font-size: 2.2rem; }
+    .worca-header-text-logo { font-size: 1.4rem; }
   }
 
   /* Nav */

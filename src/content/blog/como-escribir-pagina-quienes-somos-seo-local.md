@@ -1,7 +1,7 @@
 ---
 titulo: "¿Cómo escribir una página de 'Quiénes Somos' que atraiga clientes locales y mejore tu SEO?"
 fecha: 2026-06-12
-autor: Creado por ONE
+autor: By Enki
 categoria: Estrategia Digital
 etiquetas:
   - seo local
@@ -286,4 +286,4 @@ No necesitas ser escritor. Necesitas ser claro, honesto y relevante.
 
 ---
 
-*¿Tu página de "Quiénes Somos" está ayudando o espantando clientes? En **Creado por ONE** ayudamos a negocios en Santo Domingo y toda República Dominicana a crear páginas web estratégicas que posicionan, convierten y venden. [Cuéntanos sobre tu proyecto](/cotizador/) y recibe una propuesta en 24 horas.*
+*¿Tu página de "Quiénes Somos" está ayudando o espantando clientes? En **By Enki** ayudamos a negocios en Santo Domingo y toda República Dominicana a crear páginas web estratégicas que posicionan, convierten y venden. [Cuéntanos sobre tu proyecto](/cotizador/) y recibe una propuesta en 24 horas.*

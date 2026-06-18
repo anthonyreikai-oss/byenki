@@ -1,7 +1,7 @@
 ---
 titulo: "¿Cómo preparar tu sistema de diseño para la era de la inteligencia artificial?"
 fecha: 2026-06-01
-autor: Creado por ONE
+autor: By Enki
 categoria: Diseño y Tecnología
 etiquetas:
   - sistema de diseño
@@ -259,4 +259,4 @@ No es un proyecto de una semana. Pero cada spec file que escribes hoy es una hor
 
 ---
 
-*En **Creado por ONE** combinamos estrategia, diseño e inteligencia artificial para ayudar a negocios en Santo Domingo y toda República Dominicana a construir sistemas de diseño y presencia digital preparados para el futuro. ¿Hablamos de tu proyecto? [Cotiza aquí](/cotizador/) y recibe una propuesta en 24 horas.*
+*En **By Enki** combinamos estrategia, diseño e inteligencia artificial para ayudar a negocios en Santo Domingo y toda República Dominicana a construir sistemas de diseño y presencia digital preparados para el futuro. ¿Hablamos de tu proyecto? [Cotiza aquí](/cotizador/) y recibe una propuesta en 24 horas.*

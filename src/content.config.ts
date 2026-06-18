@@ -5,7 +5,7 @@ const blog = defineCollection({
   schema: z.object({
     titulo: z.string(),
     fecha: z.coerce.date(),
-    autor: z.string().default("Creado por ONE"),
+    autor: z.string().default("By Enki"),
     categoria: z.string().default("GENERAL"),
     etiquetas: z.array(z.string()).default([]),
     meta_descripcion: z.string().optional(),

@@ -19,13 +19,13 @@ const category = fm.categoria || "GENERAL";
 const tags = fm.etiquetas || [];
 const displayDate = formatDate(fm.fecha);
 const publishedISO = isoDate(fm.fecha);
-const author = fm.autor || "Creado por ONE";
+const author = fm.autor || "By Enki";
 
 const allPosts = await getBlogPosts();
 const sidebarPosts = allPosts.slice(0, 3);
 const allTags = getAllTags(allPosts);
 
-const site = "https://creadopor.one";
+const site = "https://byenki.dev";
 const postUrl = `${site}/blog/${post.slug}`;
 
 const blogPostingSchema = {
@@ -37,7 +37,7 @@ const blogPostingSchema = {
   datePublished: publishedISO,
   dateModified: publishedISO,
   author: { "@type": "Organization", "@id": `${site}#organization`, name: author, url: site },
-  publisher: { "@type": "Organization", "@id": `${site}#organization`, name: "Creado por ONE", url: site, logo: { "@type": "ImageObject", url: `${site}/logo-one.svg` } },
+  publisher: { "@type": "Organization", "@id": `${site}#organization`, name: "By Enki", url: site, logo: { "@type": "ImageObject", url: `${site}/logo-one.svg` } },
   image: `${site}/og-image.png`,
   url: postUrl,
   mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
@@ -57,7 +57,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={`${title} — Blog | Creado por ONE`} description={description}>
+<BaseLayout title={`${title} — Blog | By Enki`} description={description}>
   <Fragment slot="head">
     <meta name="keywords" content={fm.palabras_clave || ""} />
     {readTime && <meta name="article:reading_time" content={readTime} />}
@@ -86,7 +86,7 @@ const breadcrumbSchema = {
     <div class="relative z-10 max-w-screen-xl mx-auto px-4 md:px-6 pt-8 pb-16">
       <div class="flex items-center justify-between mb-8">
           <a href="/about" class="inline-flex items-center gap-2 font-mono text-xs text-w-muted hover:text-w-orange transition-colors">
-            Hi, mi nombre es Enki.<span class="enki-cursor">_</span>
+            Hi, mi nombre es Enki.
           </a>
         <span class="font-mono text-[10px] uppercase tracking-widest text-w-muted">{readTime}</span>
       </div>
@@ -96,12 +96,12 @@ const breadcrumbSchema = {
         <aside class="hidden lg:block w-52 shrink-0" transition:name="post-sidebar">
           <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
             <div class="flex flex-col gap-1.5" id="toc-sidebar-section">
-              <span class="font-mono text-w-orange uppercase tracking-widest text-[10px] mb-1">EN ESTE POST</span>
+              <span class="font-mono text-w-orange uppercase tracking-widest text-[10px] mb-1">EN ESTE ENSAYO</span>
               <div id="toc-sidebar-list"></div>
             </div>
 
             <div class="flex flex-col gap-1.5" id="sidebar-posts">
-              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">ÚLTIMOS POSTS</span>
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">ÚLTIMOS ENSAYOS</span>
               {sidebarPosts.map((p) => (
                 <a
                   href={`/blog/${p.slug}`}
@@ -123,7 +123,7 @@ const breadcrumbSchema = {
             </div>
 
             <div class="flex flex-col gap-1.5">
-              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">TEMAS</span>
+              <span class="text-w-orange uppercase tracking-widest text-[10px] mb-1">CATEGORÍAS</span>
               <div class="flex flex-wrap gap-1">
                 {allTags.slice(0, 6).map((tag) => (
                   <a href={`/blog`} class="text-[9px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{tag}</a>

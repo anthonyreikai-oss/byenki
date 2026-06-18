@@ -1,7 +1,7 @@
 ---
 titulo: "¿Tu página web está lista para el futuro sin buscadores tradicionales? — Auditoría de preparación GEO para 2026"
 fecha: 2026-06-05
-autor: Creado por ONE
+autor: By Enki
 categoria: SEO y Estrategia Digital
 etiquetas:
   - GEO
@@ -60,7 +60,7 @@ Basado en el framework de auditoría de ImageX presentado en Search Engine Journ
 
 **El problema:** La mayoría de los sitios web le presentan a las IAs texto plano. Sin schema markup, una IA tiene que *adivinar* qué significa cada elemento de tu página.
 
-Imagina que tu página dice: "María Fernández, Directora de Estrategia en Creado por ONE, Santo Domingo". Para un humano, es claro. Para una IA sin schema, es una cadena de palabras. Con schema, le estás diciendo explícitamente: esto es una **Person** con un **jobTitle** que trabaja en una **Organization** ubicada en un **Place**.
+Imagina que tu página dice: "María Fernández, Directora de Estrategia en By Enki, Santo Domingo". Para un humano, es claro. Para una IA sin schema, es una cadena de palabras. Con schema, le estás diciendo explícitamente: esto es una **Person** con un **jobTitle** que trabaja en una **Organization** ubicada en un **Place**.
 
 **Lo que Google, Microsoft y OpenAI han confirmado:**
 
@@ -241,4 +241,4 @@ No necesitas ser una enterprise de 10,000 páginas. Una PYME con 20 páginas bie
 
 ---
 
-*En **Creado por ONE** preparamos tu presencia digital para el futuro. Desde sitios web con datos estructurados y schema markup hasta estrategias de contenido diseñadas para ser citadas por IAs. Si tu sitio no pasa esta auditoría GEO, [cuéntanos sobre tu proyecto](/cotizador/). Entregamos propuesta en 24 horas.*
+*En **By Enki** preparamos tu presencia digital para el futuro. Desde sitios web con datos estructurados y schema markup hasta estrategias de contenido diseñadas para ser citadas por IAs. Si tu sitio no pasa esta auditoría GEO, [cuéntanos sobre tu proyecto](/cotizador/). Entregamos propuesta en 24 horas.*

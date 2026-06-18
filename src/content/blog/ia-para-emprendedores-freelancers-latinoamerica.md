@@ -1,7 +1,7 @@
 ---
 titulo: "¿Cómo puede un freelancer o emprendedor en Latinoamérica usar la IA para hacer crecer su negocio en 2026?"
 fecha: 2026-06-08
-autor: Creado por ONE
+autor: By Enki
 categoria: Tecnología y Negocios
 etiquetas:
   - inteligencia artificial
@@ -34,7 +34,7 @@ Hay dos grandes categorías donde la IA transforma el juego:
 1. **Automatizar tareas administrativas** (calendario, finanzas, gestión de proyectos)
 2. **Hacer crecer tu negocio** (marketing, prospección, contenido, email)
 
-En Creado por ONE probamos docenas de herramientas desde Santo Domingo. Aquí van las que sí funcionan.
+En By Enki probamos docenas de herramientas desde Santo Domingo. Aquí van las que sí funcionan.
 
 ---
 
@@ -237,4 +237,4 @@ La pregunta no es si usar IA. La pregunta es: ¿la estás usando para potenciar 
 
 ---
 
-*En **Creado por ONE** combinamos estrategia, diseño e inteligencia artificial para ayudar a negocios en Santo Domingo y toda República Dominicana a construir una presencia digital que vende. Desde páginas web creadas con IA hasta branding estratégico y SEO local. ¿Hablamos de tu proyecto? [Cotiza aquí](/cotizador/) y recibe una propuesta en 24 horas.*
+*En **By Enki** combinamos estrategia, diseño e inteligencia artificial para ayudar a negocios en Santo Domingo y toda República Dominicana a construir una presencia digital que vende. Desde páginas web creadas con IA hasta branding estratégico y SEO local. ¿Hablamos de tu proyecto? [Cotiza aquí](/cotizador/) y recibe una propuesta en 24 horas.*
