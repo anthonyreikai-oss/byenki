@@ -146,7 +146,7 @@ const aboutText = t('index.about_link', locale);
         </aside>
 
         <!-- Article -->
-        <article class="max-w-4xl xl:max-w-5xl min-w-0 flex-1" id="blog-article" transition:name="post-article">
+        <article class="max-w-3xl xl:max-w-4xl min-w-0 flex-1" id="blog-article" transition:name="post-article">
           <!-- TOC mobile -->
           <details class="lg:hidden mb-6 font-mono text-sm" id="toc-mobile">
             <summary class="text-w-orange uppercase cursor-pointer select-none flex items-center gap-2">
@@ -169,8 +169,8 @@ const aboutText = t('index.about_link', locale);
                 </>
               )}
             </div>
-            <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.92] uppercase text-w-cream mb-6">
-              {title}
+            <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.92] uppercase text-w-cream mb-6">
+              {title.split(' — ').map((part, i) => <>{i > 0 && <br/>}{part}</>)}
             </h1>
             <div class="flex items-center gap-4 font-mono text-sm text-w-muted uppercase border-t border-dashed border-dashed-cream pt-4">
               <span class="text-w-orange font-bold">[{displayDate}]</span>
@@ -186,7 +186,7 @@ const aboutText = t('index.about_link', locale);
             [&_p]:mb-5 [&_p]:leading-[1.8]
             [&_strong]:text-w-orange [&_strong]:font-bold
             [&_a]:text-w-orange [&_a]:underline [&_a]:decoration-w-orange/30 [&_a]:underline-offset-4 [&_a]:hover:decoration-w-orange
-            [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-5 [&_ul]:space-y-2
+            [&_ul]:list-none [&_ul]:pl-5 [&_ul]:mb-5 [&_ul]:space-y-2
             [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-5 [&_ol]:space-y-2
             [&_li]:text-w-cream [&_li]:leading-[1.8]
             [&_blockquote]:border-l-2 [&_blockquote]:border-w-orange/30 [&_blockquote]:pl-4 [&_blockquote]:py-1 [&_blockquote]:my-6 [&_blockquote]:text-w-muted/80 [&_blockquote]:italic
@@ -195,7 +195,7 @@ const aboutText = t('index.about_link', locale);
             [&_pre_code]:bg-transparent [&_pre_code]:text-w-cream [&_pre_code]:p-0
             [&_hr]:border-dashed [&_hr]:border-dashed-cream [&_hr]:my-8
             [&_img]:max-w-full [&_img]:h-auto [&_img]:border [&_img]:border-dashed [&_img]:border-dashed-cream
-            [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6 [&_table]:font-mono
+            [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6 [&_table]:font-mono [&_table]:text-[18px]
             [&_th]:text-left [&_th]:text-w-cream [&_th]:uppercase [&_th]:font-bold [&_th]:p-3 [&_th]:border-b [&_th]:border-dashed [&_th]:border-dashed-cream [&_th]:text-sm [&_th]:tracking-widest
             [&_td]:p-3 [&_td]:border-b [&_td]:border-dashed [&_td]:border-dashed-cream [&_td]:text-w-muted [&_td]:align-top
             [&_tr]:hover:bg-w-orange/5 [&_tr]:transition-colors
@@ -315,6 +315,45 @@ const aboutText = t('index.about_link', locale);
   document.querySelectorAll('.prose img').forEach(img => {
     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
   });
+
+  // ── Interactive checklists ──
+  (function() {
+    const LIST_KEY = 'byenki_checklist';
+    const url = location.pathname;
+    const storage = (() => {
+      try {
+        const raw = localStorage.getItem(LIST_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch { return {}; }
+    })();
+
+    function save() {
+      try { localStorage.setItem(LIST_KEY, JSON.stringify(storage)); } catch {}
+    }
+
+    function getKey(input: HTMLInputElement) {
+      const li = input.closest('li');
+      const text = li?.textContent?.trim().slice(0, 60) || '';
+      return `${url}::${text}`;
+    }
+
+    const inputs = document.querySelectorAll<HTMLInputElement>('.prose input[type="checkbox"][disabled]');
+    inputs.forEach((input, i) => {
+      input.disabled = false;
+      const key = getKey(input);
+      if (storage[key] !== undefined) {
+        input.checked = storage[key];
+      }
+      input.addEventListener('change', () => {
+        storage[getKey(input)] = input.checked;
+        save();
+        input.closest('li')?.classList.toggle('checklist-done', input.checked);
+      });
+      if (input.checked) {
+        input.closest('li')?.classList.add('checklist-done');
+      }
+    });
+  })();
 </script>
 
 <style>
@@ -359,5 +398,53 @@ const aboutText = t('index.about_link', locale);
   .enki-cursor {
     animation: enkiBlink 1s step-end infinite;
     color: var(--color-w-orange);
+  }
+
+  /* ── Interactive checklist ── */
+  .prose ul:has(input[type="checkbox"]) {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose li:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    margin-left: 0;
+  }
+  .prose input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+    border: 2px dashed var(--color-w-muted);
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    top: 0.15em;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .prose input[type="checkbox"]:checked {
+    border-color: var(--color-w-orange);
+    background: var(--color-w-orange);
+  }
+  .prose input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 0.25em;
+    top: 0.05em;
+    width: 0.35em;
+    height: 0.6em;
+    border: solid var(--color-w-black);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .prose input[type="checkbox"]:hover {
+    border-color: var(--color-w-orange);
+  }
+  .prose li.checklist-done {
+    opacity: 0.5;
+    text-decoration: line-through;
   }
 </style>
