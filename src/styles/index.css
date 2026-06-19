@@ -11,7 +11,7 @@
   --font-sans: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --color-w-black: #060606;
+  --color-w-black: #2b2b2b;
   --color-w-void: #0d0d0d;
   --color-w-surface: #141414;
   --color-w-surface-accent: #1e1e1e;
@@ -107,7 +107,7 @@
 
 /* Base custom styles resembling printed posters & brutalist grids */
 body {
-  background-color: #060606;
+  background-color: #2b2b2b;
   color: #F5EFE0;
   font-family: "Space Grotesk", sans-serif;
   overflow-x: hidden;
@@ -161,7 +161,7 @@ body::before {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #060606;
+  background: #2b2b2b;
 }
 ::-webkit-scrollbar-thumb {
   background: #C4622D;

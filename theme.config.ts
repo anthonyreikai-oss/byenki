@@ -54,7 +54,7 @@ const config: ThemeConfig = {
   accentColor: "#C4622D",
 
   colors: {
-    black: "#060606",
+    black: "#2b2b2b",
     void: "#0d0d0d",
     surface: "#141414",
     surfaceAccent: "#1e1e1e",
