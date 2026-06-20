@@ -25,7 +25,7 @@ const publishedISO = isoDate(fm.fecha);
 const author = fm.autor || theme.name;
 
 const allPosts = await getBlogPosts(locale);
-const sidebarPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+const sidebarPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 2);
 const allTags = getAllTags(allPosts, locale);
 
 const site = theme.domain;
@@ -107,10 +107,12 @@ const aboutText = t('index.about_link', locale);
         <!-- Sidebar: últimos posts + tags (sticky) -->
         <aside class="hidden lg:block w-52 shrink-0" transition:name="post-sidebar">
           <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
-            <div class="flex flex-col gap-1.5" id="toc-sidebar-section">
-              <span class="font-mono text-w-orange uppercase tracking-widest text-sm mb-1">{t('sidebar.en_este_ensayo', locale)}</span>
-              <div id="toc-sidebar-list"></div>
-            </div>
+            <details class="flex flex-col gap-1.5 group" id="toc-sidebar-section">
+              <summary class="font-mono text-w-orange uppercase tracking-widest text-sm mb-1 list-none cursor-pointer select-none">
+                {t('sidebar.en_este_ensayo', locale)} <span class="toc-sidebar-arrow inline-block transition-transform duration-200 text-[10px]">▼</span>
+              </summary>
+              <div class="flex flex-col gap-1.5 pl-6" id="toc-sidebar-list"></div>
+            </details>
 
             <div class="flex flex-col gap-1.5" id="sidebar-posts">
               <span class="text-w-orange uppercase tracking-widest text-sm mb-1">{t('sidebar.ultimos_ensayos', locale)}</span>
@@ -369,8 +371,10 @@ const aboutText = t('index.about_link', locale);
     transition: width 0.1s linear;
   }
 
-  #toc-mobile summary::-webkit-details-marker { display: none; }
-  #toc-mobile summary { list-style: none; }
+  #toc-mobile summary::-webkit-details-marker,
+  #toc-sidebar-section summary::-webkit-details-marker { display: none; }
+  #toc-mobile summary,
+  #toc-sidebar-section summary { list-style: none; }
   #toc-mobile[open] summary .toc-icon { opacity: 0; }
   #toc-mobile[open] summary span:nth-child(1)::after {
     content: '\2212';
@@ -389,6 +393,9 @@ const aboutText = t('index.about_link', locale);
     align-items: center;
     justify-content: center;
     font-size: 10px;
+  }
+  #toc-sidebar-section[open] .toc-sidebar-arrow {
+    transform: rotate(180deg);
   }
 
   @keyframes enkiBlink {

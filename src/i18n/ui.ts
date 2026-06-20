@@ -42,7 +42,7 @@ export const UI = {
   "nav.mobile_categorias": { es: "CATEGORÍAS", en: "CATEGORIES" },
   "nav.mobile_recursos": { es: "RECURSOS", en: "RESOURCES" },
   "nav.mobile_sobre": { es: "SOBRE", en: "ABOUT" },
-  "sidebar.en_este_ensayo": { es: "EN ESTE ENSAYO", en: "IN THIS ESSAY" },
+  "sidebar.en_este_ensayo": { es: "VER TABLA DE CONTENIDO DE ESTE ENSAYO", en: "SEE TABLE OF CONTENTS" },
   "sidebar.ultimos_ensayos": { es: "ÚLTIMOS ENSAYOS", en: "LATEST ESSAYS" },
   "sidebar.categorias": { es: "CATEGORÍAS", en: "CATEGORIES" },
   "sidebar.leer_mas": { es: "Leer más ensayos →", en: "Read more essays →" },
