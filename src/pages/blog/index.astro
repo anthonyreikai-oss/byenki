@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlogContent from '../../components/react/BlogContent';
+import { getBlogPosts, formatDate } from '../../data/blog';
 import { t, type Lang } from '../../i18n/ui';
 import theme from '../../../theme.config';
 
@@ -10,6 +11,18 @@ const locale = (Astro.currentLocale || 'es') as Lang;
 const site = theme.domain;
 const localePrefix = locale === 'en' ? '/en' : '';
 const blogUrl = `${site}${localePrefix}/blog`;
+
+const allPosts = await getBlogPosts(locale);
+
+const posts = allPosts.map((p) => ({
+  date: formatDate(p.data.fecha, locale),
+  category: p.data.categoria || "GENERAL",
+  slug: p.slug,
+  title: p.data.titulo,
+  excerpt: p.data.meta_descripcion || "",
+}));
+
+const initialCategory = Astro.url.searchParams.get('categoria') || 'ALL';
 ---
 
 <BaseLayout
@@ -40,7 +53,7 @@ const blogUrl = `${site}${localePrefix}/blog`;
     </div>
 
     <div class="relative z-10 pb-12">
-      <BlogContent client:load locale={locale} social={{ instagram: theme.social.instagram, linkedin: theme.social.linkedin }} />
+      <BlogContent client:load locale={locale} initialPosts={posts} initialFilter={initialCategory} social={{ instagram: theme.social.instagram, linkedin: theme.social.linkedin }} />
     </div>
   </main>
   <Footer locale={locale} />

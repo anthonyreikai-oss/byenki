@@ -1,5 +1,6 @@
 ---
 import { t, type Lang } from '../i18n/ui';
+import { CATEGORIES, categoriaPath } from '../data/categorias';
 import theme from '../../theme.config';
 
 export interface Props {
@@ -15,7 +16,6 @@ const altPath = altLocale === 'es'
   ? currentPath.replace(/^\/en/, '') || '/'
   : altPrefix + (currentPath === '/' ? '' : currentPath);
 const blogPath = localePrefix + '/blog';
-const aboutPath = localePrefix + '/about';
 ---
 
 <header class="worca-header" id="siteHeader" style={`--logo-font: "${theme.logoFont}"`}>
@@ -30,7 +30,7 @@ const aboutPath = localePrefix + '/about';
       <!-- Categorías dropdown -->
       <div class="worca-dropdown">
         <button class="worca-dropdown-toggle">
-          {t('nav.categorias', locale)}
+          CATEGORÍAS DEL BLOG
           <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="worca-dropdown-menu">
@@ -42,58 +42,9 @@ const aboutPath = localePrefix + '/about';
           </div>
           <div class="worca-term-body">
             <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./categorias/</span></div>
-            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> SEO y Posicionamiento<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Diseño y Tecnología<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Estrategia Digital<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Negocios y Emprendimiento<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <a href={blogPath} class="worca-term-line"><span class="worca-term-gt">></span> Inteligencia Artificial<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recursos dropdown -->
-      <div class="worca-dropdown">
-        <button class="worca-dropdown-toggle">
-          {t('nav.recursos', locale)}
-          <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </button>
-        <div class="worca-dropdown-menu">
-          <div class="worca-term-bar">
-            <span class="worca-term-dot red"></span>
-            <span class="worca-term-dot yellow"></span>
-            <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">{t('nav.recursos_term', locale)}</span>
-          </div>
-          <div class="worca-term-body">
-            <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./recursos/</span></div>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.guias', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.plantillas', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.herramientas', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.checklist', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
-            <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sobre dropdown -->
-      <div class="worca-dropdown">
-        <button class="worca-dropdown-toggle">
-          {t('nav.sobre', locale)}
-          <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </button>
-        <div class="worca-dropdown-menu">
-          <div class="worca-term-bar">
-            <span class="worca-term-dot red"></span>
-            <span class="worca-term-dot yellow"></span>
-            <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">{t('nav.sobre_term', locale)}</span>
-          </div>
-          <div class="worca-term-body">
-            <div class="worca-term-prompt">$ <span class="worca-term-cmd">cat ./README.md</span></div>
-            <a href={aboutPath} class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.quienes', locale)}<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.estudio', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
-            <a href="#" class="worca-term-line"><span class="worca-term-gt">></span> {t('nav.contacto', locale)}<span class="worca-term-status">{t('nav.proximo', locale)}</span></a>
+            {CATEGORIES.map((cat) => (
+              <a href={categoriaPath(cat.slug, localePrefix)} class="worca-term-line"><span class="worca-term-gt">></span> {cat.name}<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            ))}
             <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
           </div>
         </div>
@@ -116,19 +67,10 @@ const aboutPath = localePrefix + '/about';
 
   <div class="worca-mobile-menu" id="worcaMobileMenu">
     <a href={localePrefix + '/'} class="worca-mobile-nav-link">{t('nav.home', locale)}</a>
-    <div class="worca-mobile-section-label">{t('nav.mobile_categorias', locale)}</div>
-    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> SEO y Posicionamiento</a>
-    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Diseño y Tecnología</a>
-    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Estrategia Digital</a>
-    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Negocios y Emprendimiento</a>
-    <a href={blogPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> Inteligencia Artificial</a>
-    <div class="worca-mobile-section-label">{t('nav.mobile_recursos', locale)}</div>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.guias', locale)}</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.plantillas', locale)}</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.herramientas', locale)}</a>
-    <div class="worca-mobile-section-label">{t('nav.mobile_sobre', locale)}</div>
-    <a href={aboutPath} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.quienes', locale)}</a>
-    <a href="#" class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {t('nav.contacto', locale)}</a>
+    <div class="worca-mobile-section-label">CATEGORÍAS DEL BLOG</div>
+    {CATEGORIES.map((cat) => (
+      <a href={categoriaPath(cat.slug, localePrefix)} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {cat.name}</a>
+    ))}
     <a href={blogPath} class="worca-mobile-nav-link">{t('nav.archivo', locale)}</a>
     <button id="theme-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar tema">
       <svg class="worca-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>

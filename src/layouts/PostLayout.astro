@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { getBlogPosts, formatDate, isoDate, getAllTags, type BlogPost } from "../data/blog";
+import { CATEGORIES, categoriaPath, SLUG_MAP } from "../data/categorias";
 import { t, type Lang } from "../i18n/ui";
 import theme from "../../theme.config";
 
@@ -25,7 +26,7 @@ const publishedISO = isoDate(fm.fecha);
 const author = fm.autor || theme.name;
 
 const allPosts = await getBlogPosts(locale);
-const sidebarPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 2);
+const sidebarPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 6);
 const allTags = getAllTags(allPosts, locale);
 
 const site = theme.domain;
@@ -126,21 +127,18 @@ const aboutText = t('index.about_link', locale);
                   {p.slug === post.slug ? '▸ ' : '\u00A0\u00A0'}{p.data.titulo}
                 </a>
               ))}
-              {allPosts.length > 3 && (
-                <a href={blogPath} class="text-w-muted hover:text-w-orange transition-colors mt-1" style="font-size:13px">
-                  +{allPosts.length - 3} {locale === 'en' ? 'more' : 'más'} →
+              {allPosts.length > 7 && (
+                <a href={blogPath} class="text-w-orange hover:text-w-cream transition-colors uppercase mt-1" style="font-size:13px">
+                  HAY +{allPosts.length - 7} MÁS ENSAYOS POR LEER →
                 </a>
               )}
-              <a href={blogPath} class="text-w-orange hover:text-w-cream transition-colors uppercase" style="font-size:13px">
-                {t('sidebar.leer_mas', locale)}
-              </a>
             </div>
 
             <div class="flex flex-col gap-1.5">
               <span class="text-w-orange uppercase tracking-widest text-sm mb-1">{t('sidebar.categorias', locale)}</span>
               <div class="flex flex-wrap gap-1">
-                {allTags.slice(0, 6).map((tag) => (
-                  <a href={blogPath} class="text-xs uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{tag}</a>
+                {CATEGORIES.map((cat) => (
+                  <a href={categoriaPath(cat.slug, localePrefix)} class="text-xs uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{cat.name}</a>
                 ))}
               </div>
             </div>

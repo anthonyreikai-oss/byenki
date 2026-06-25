@@ -2,13 +2,32 @@ import React from 'react';
 import { motion } from 'motion/react';
 import BrutalBox from './BrutalBox';
 
+interface PostData {
+  date: string;
+  category: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+}
+
 interface BlogContentProps {
   locale?: string;
+  initialPosts?: PostData[];
+  initialFilter?: string;
   social?: {
     instagram: string;
     linkedin: string;
   };
 }
+
+const CATEGORIES = [
+  { name: "como sobrevivir 2030", slug: "como-sobrevivir-2030" },
+  { name: "Pensamiento Critico", slug: "pensamiento-critico" },
+  { name: "Desarrollo Creatividad", slug: "desarrollo-creatividad" },
+  { name: "Ensayos de Noticias", slug: "ensayos-de-noticias" },
+  { name: "1% Insight", slug: "1-insight" },
+  { name: "Personales", slug: "personales" },
+];
 
 const t = (key: string, locale: string): string => {
   const dict: Record<string, Record<string, string>> = {
@@ -33,101 +52,14 @@ const t = (key: string, locale: string): string => {
   return dict[key]?.[locale] ?? dict[key]?.es ?? key;
 };
 
-const postsEs = [
-  {
-    date: '15/06/2026',
-    category: 'SEO',
-    slug: 'guia-posicionar-negocio-google-republica-dominicana',
-    title: '¿Cómo posicionar tu negocio en Google si estás en República Dominicana?',
-    excerpt: 'Google Business Profile, citas locales, reseñas y SEO local — paso a paso para dominar el mapa local. Los negocios con fotos en su perfil reciben un 42% más de solicitudes de direcciones.',
-  },
-  {
-    date: '12/06/2026',
-    category: 'ESTRATEGIA',
-    slug: 'como-escribir-pagina-quienes-somos-seo-local',
-    title: '¿Cómo escribir una página de "Quiénes Somos" que atraiga clientes locales?',
-    excerpt: 'La segunda página más visitada de cualquier sitio web — y la mayoría de negocios en Latinoamérica la tratan como un trámite. Cómo convertirla en tu activo de SEO local más potente.',
-  },
-  {
-    date: '08/06/2026',
-    category: 'IA',
-    slug: 'ia-para-emprendedores-freelancers-latinoamerica',
-    title: '¿Cómo puede un freelancer en Latinoamérica usar la IA para hacer crecer su negocio?',
-    excerpt: 'La IA ya no es opcional — es la palanca competitiva más accesible para una PYME latinoamericana. Herramientas que funcionan en español, automatización de marketing y reducción de la brecha tecnológica.',
-  },
-  {
-    date: '05/06/2026',
-    category: 'GEO',
-    slug: 'auditoria-geo-2026-pagina-web-lista-futuro-sin-buscadores',
-    title: '¿Tu página web está lista para el futuro sin buscadores tradicionales?',
-    excerpt: 'Más de la mitad de los sitios web carecen de datos estructurados que las IAs puedan leer. Auditoría de preparación GEO para 2026: ChatGPT, Google AI Overviews y Perplexity.',
-  },
-  {
-    date: '01/06/2026',
-    category: 'DISEÑO',
-    slug: 'como-preparar-sistema-diseno-ai-ready',
-    title: '¿Cómo preparar tu sistema de diseño para la era de la inteligencia artificial?',
-    excerpt: 'Los prototipos de IA fallan por falta de contexto estructurado, no por falta de inteligencia. Spec files, token layer y auditoría automatizada — el approach de Atlassian, IBM Carbon y Nordhealth.',
-  },
-];
-
-const postsEn = [
-  {
-    date: 'Jun 15, 2026',
-    category: 'SEO',
-    slug: 'how-to-rank-business-google-dominican-republic',
-    title: 'How to rank your business on Google in the Dominican Republic',
-    excerpt: 'Google Business Profile, local citations, reviews and local SEO — step by step to dominate the local map. Businesses with photos on their profile get 42% more direction requests.',
-  },
-  {
-    date: 'Jun 12, 2026',
-    category: 'STRATEGY',
-    slug: 'how-to-write-about-us-page-local-seo',
-    title: 'How to write an About Us page that attracts local customers',
-    excerpt: 'The second most visited page on any website — and most businesses in Latin America treat it as an afterthought. How to turn it into your most powerful local SEO asset.',
-  },
-  {
-    date: 'Jun 08, 2026',
-    category: 'AI',
-    slug: 'ai-for-freelancers-entrepreneurs-latin-america',
-    title: 'How can a freelancer in Latin America use AI to grow their business?',
-    excerpt: 'AI is no longer optional — it is the most accessible competitive lever for a Latin American SME. Tools that work in Spanish, marketing automation and closing the technology gap.',
-  },
-  {
-    date: 'Jun 05, 2026',
-    category: 'GEO',
-    slug: 'geo-audit-2026-website-ready-future-without-search-engines',
-    title: 'Is your website ready for a future without traditional search engines?',
-    excerpt: 'Over half of websites lack structured data that AIs can read. A GEO readiness audit for 2026: ChatGPT, Google AI Overviews and Perplexity.',
-  },
-  {
-    date: 'Jun 01, 2026',
-    category: 'DESIGN',
-    slug: 'how-to-prepare-design-system-ai-ready',
-    title: 'How to prepare your design system for the AI era',
-    excerpt: 'AI-generated prototypes fail due to lack of structured context, not lack of intelligence. Spec files, token layer and automated auditing — the approach of Atlassian, IBM Carbon and Nordhealth.',
-  },
-];
-
-const topicsEs = [
-  'SEO LOCAL', 'GEO', 'IA', 'GOOGLE BUSINESS PROFILE', 'SCHEMA MARKUP',
-  'BRANDING', 'DISEÑO', 'ESTRATEGIA', 'CÓDIGO', 'DOMINICANA', 'NEGOCIOS', 'AUDITORÍA',
-];
-
-const topicsEn = [
-  'LOCAL SEO', 'GEO', 'AI', 'GOOGLE BUSINESS PROFILE', 'SCHEMA MARKUP',
-  'BRANDING', 'DESIGN', 'STRATEGY', 'CODE', 'DOMINICAN REPUBLIC', 'BUSINESS', 'AUDIT',
-];
-
 const POSTS_PER_PAGE = 4;
 
-export default function BlogContent({ locale: propLocale, social }: BlogContentProps = {}) {
+export default function BlogContent({ locale: propLocale, initialPosts = [], initialFilter = 'ALL', social }: BlogContentProps = {}) {
   const locale = propLocale || (typeof document !== 'undefined' ? document.documentElement.lang || 'es' : 'es');
   const blogPath = locale === 'en' ? '/en/blog' : '/blog';
-  const posts = locale === 'en' ? postsEn : postsEs;
-  const topics = locale === 'en' ? topicsEn : topicsEs;
+  const posts = initialPosts;
 
-  const [filter, setFilter] = React.useState('ALL');
+  const [filter, setFilter] = React.useState(initialFilter);
   const [query, setQuery] = React.useState('');
   const [page, setPage] = React.useState(1);
 
@@ -140,6 +72,14 @@ export default function BlogContent({ locale: propLocale, social }: BlogContentP
   const paged = filtered.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
 
   React.useEffect(() => { setPage(1); }, [filter, query]);
+
+  React.useEffect(() => {
+    const url = new URL(window.location.href);
+    const cat = url.searchParams.get('categoria');
+    if (cat && cat !== filter) {
+      setFilter(cat);
+    }
+  }, []);
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 pb-16">
@@ -194,9 +134,9 @@ export default function BlogContent({ locale: propLocale, social }: BlogContentP
             />
           </div>
         </div>
-        <div className="flex gap-3 font-mono text-sm">
+        <div className="flex gap-3 font-mono text-sm flex-wrap">
           <span className="text-w-muted uppercase">{t('filtro', locale)}</span>
-          {['ALL', 'DISEÑO', 'ESTRATEGIA', 'SEO', 'GEO', 'IA'].map((f) => (
+          {['ALL', ...CATEGORIES.map((c) => c.name)].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
@@ -204,19 +144,19 @@ export default function BlogContent({ locale: propLocale, social }: BlogContentP
                 filter === f ? 'text-w-orange font-bold' : 'text-w-muted hover:text-w-orange'
               }`}
             >
-              [ {f} ]
+              [ {f === 'ALL' ? (locale === 'en' ? 'ALL' : 'TODO') : f} ]
             </button>
           ))}
         </div>
       </div>
 
-      {/* POSTS — all same featured style */}
+      {/* POSTS */}
       <div className="space-y-10 mb-12">
         {paged.map((post, i) => {
           const globalIndex = filtered.indexOf(post);
           return (
             <motion.article
-              key={i}
+              key={post.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -225,7 +165,7 @@ export default function BlogContent({ locale: propLocale, social }: BlogContentP
                 i > 0 ? 'border-t border-dashed border-dashed-cream' : ''
               }`}
             >
-              <a href={`${blogPath}/${post.slug}`} class="flex flex-col md:flex-row gap-6 items-start w-full no-underline">
+              <a href={`${blogPath}/${post.slug}`} className="flex flex-col md:flex-row gap-6 items-start w-full no-underline">
               <div className="w-36 shrink-0 font-mono text-sm text-w-orange font-bold uppercase">
                 [ {post.date} ]
               </div>
@@ -288,20 +228,21 @@ export default function BlogContent({ locale: propLocale, social }: BlogContentP
         </div>
       )}
 
-      {/* TOPICS CLOUD */}
+      {/* CATEGORIES CLOUD */}
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6 font-mono text-xs text-w-orange uppercase tracking-widest">
           <span className="w-12 h-px bg-w-orange/40"></span>
           <span>{t('categorias', locale)}</span>
         </div>
         <div className="flex flex-wrap gap-3">
-          {topics.map((topic) => (
-            <span
-              key={topic}
-              className="font-mono text-sm border border-dashed border-dashed-cream px-4 py-2 text-w-cream hover:border-w-orange hover:text-w-orange transition-all cursor-default"
+          {CATEGORIES.map((cat) => (
+            <a
+              key={cat.slug}
+              href={`/categoria/${cat.slug}`}
+              className="font-mono text-sm border border-dashed border-dashed-cream px-4 py-2 text-w-cream hover:border-w-orange hover:text-w-orange transition-all cursor-pointer"
             >
-              #{topic}
-            </span>
+              #{cat.name}
+            </a>
           ))}
         </div>
       </section>

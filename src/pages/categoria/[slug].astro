@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getBlogPosts, formatDate } from '../../data/blog';
+import { CATEGORIES, CATEGORY_MAP } from '../../data/categorias';
+import { t, type Lang } from '../../i18n/ui';
+import theme from '../../../theme.config';
+
+export function getStaticPaths() {
+  return CATEGORIES.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { categoria: cat.name },
+  }));
+}
+
+const { categoria } = Astro.props;
+const locale: Lang = 'es';
+const localePrefix = '';
+const blogPath = '/blog';
+
+const allPosts = await getBlogPosts();
+const posts = allPosts.filter((p) => p.data.categoria === categoria);
+const otherCategories = CATEGORIES.filter((c) => c.name !== categoria);
+const readingTime = (t: string | undefined) => t || '';
+---
+
+<BaseLayout title={`${categoria} — Blog | ${theme.name}`} description={`Ensayos sobre ${categoria.toLowerCase()}`} locale={locale}>
+  <Fragment slot="head">
+    <meta name="keywords" content={`${categoria.toLowerCase()}, blog, ensayos`} />
+  </Fragment>
+  <Header locale={locale} />
+  <main class="min-h-screen bg-w-black text-w-cream relative">
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-5">
+      <div class="max-w-screen-2xl mx-auto h-full w-full border-x border-dashed border-dashed-cream flex justify-between">
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+        <div class="w-1/4 h-full border-r border-dashed border-dashed-cream"></div>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 pb-16">
+      <div class="lg:flex lg:gap-8 xl:gap-10 justify-center">
+
+        <!-- Sidebar -->
+        <aside class="hidden lg:block w-52 shrink-0">
+          <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">SOBRE ESTA CATEGORÍA</span>
+              <span class="text-w-cream text-sm font-bold leading-snug">{categoria}</span>
+              <span class="text-w-muted text-[11px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 inline-block w-fit">{posts.length} {posts.length === 1 ? 'ENSAYO' : 'ENSAYOS'}</span>
+            </div>
+
+            <div class="flex flex-col gap-1.5 pt-4 border-t border-dashed border-dashed-cream">
+              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">ÚLTIMOS ENSAYOS</span>
+              {posts.slice(0, 5).map((p) => (
+                <a href={`${blogPath}/${p.slug}`} class="block text-w-muted hover:text-w-cream transition-colors text-[13px] leading-snug">
+                  ▸ {p.data.titulo}
+                </a>
+              ))}
+            </div>
+
+            <div class="flex flex-col gap-1.5 pt-4 border-t border-dashed border-dashed-cream">
+              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">OTRAS CATEGORÍAS</span>
+              {otherCategories.map((cat) => (
+                <a href={`/categoria/${cat.slug}`} class="block text-w-muted hover:text-w-cream transition-colors text-[13px] leading-snug">
+                  ▸ {cat.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <article class="max-w-3xl xl:max-w-4xl min-w-0 flex-1">
+          <!-- Mobile: other categories -->
+          <div class="lg:hidden flex flex-wrap gap-1 mb-6">
+            {otherCategories.map((cat) => (
+              <a href={`/categoria/${cat.slug}`} class="text-xs uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{cat.name}</a>
+            ))}
+          </div>
+
+          <header class="mb-10">
+            <div class="flex items-center gap-3 mb-4 font-mono text-sm text-w-orange uppercase tracking-widest">
+              <span class="w-8 h-px bg-w-orange/40"></span>
+              <span>CATEGORÍA</span>
+              <span class="text-w-muted">·</span>
+              <span class="text-w-muted">{posts.length} {posts.length === 1 ? 'ENSAYO' : 'ENSAYOS'}</span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.92] uppercase text-w-cream">
+              {categoria}
+            </h1>
+          </header>
+
+          {posts.length > 0 ? (
+            <div class="space-y-8">
+              {posts.map((post, i) => (
+                <a href={`${blogPath}/${post.slug}`} class="group flex flex-col md:flex-row gap-6 items-start py-6 px-4 -mx-4 transition-colors border-t border-dashed border-dashed-cream first:border-t-0 no-underline hover:bg-w-orange/[0.02]">
+                  <div class="w-16 shrink-0 font-mono text-sm text-w-orange font-bold uppercase">
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  <div class="flex-grow min-w-0">
+                    <div class="flex items-center gap-4 mb-2">
+                      <span class="text-w-muted font-mono text-xs uppercase tracking-wider">[{formatDate(post.data.fecha, locale)}]</span>
+                      <span class="text-w-muted font-mono text-[10px] uppercase opacity-50">{readingTime(post.data.tiempo_lectura)}</span>
+                    </div>
+                    <h2 class="font-display text-xl sm:text-2xl lg:text-3xl text-w-cream uppercase leading-[0.88] group-hover:text-w-orange transition-colors">
+                      {post.data.titulo}
+                    </h2>
+                    {post.data.meta_descripcion && (
+                      <p class="font-mono text-[16px] text-w-cream/80 mt-3 max-w-3xl leading-relaxed line-clamp-3">
+                        {post.data.meta_descripcion}
+                      </p>
+                    )}
+                    <div class="mt-4 flex items-center gap-3 flex-wrap">
+                      <span class="text-w-orange font-mono text-xs uppercase group-hover:translate-x-1 transition-transform duration-200 inline-block">
+                        LEER ENSAYO →
+                      </span>
+                      {post.data.etiquetas && post.data.etiquetas.length > 0 && (
+                        <span class="text-w-muted font-mono text-[10px] uppercase opacity-0 group-hover:opacity-50 transition-opacity">
+                          {post.data.etiquetas.slice(0, 3).map((t) => `#${t}`).join(' ')}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="font-mono text-[18px] text-w-muted italic border-t border-dashed border-dashed-cream pt-8">
+              No hay ensayos en esta categoría todavía.
+            </p>
+          )}
+        </article>
+      </div>
+    </div>
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>
