@@ -2,8 +2,8 @@
 titulo: "Lo que cambia cuando el software deja de ser una herramienta pasiva"
 fecha: 2026-04-20
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - ia agencial
   - agentes de ia

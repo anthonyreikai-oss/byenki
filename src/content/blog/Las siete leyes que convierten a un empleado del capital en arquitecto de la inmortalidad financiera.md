@@ -2,8 +2,8 @@
 titulo: "Las siete leyes que convierten a un empleado del capital en arquitecto de la inmortalidad financiera"
 fecha: 2026-05-25
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - inmortalidad financiera
   - riqueza generacional

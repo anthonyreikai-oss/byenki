@@ -2,8 +2,8 @@
 titulo: "La sostenibilidad como infraestructura invisible del negocio que viene"
 fecha: 2026-04-23
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - sostenibilidad
   - habilidades verdes

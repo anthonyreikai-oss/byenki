@@ -1,6 +1,6 @@
 ---
 import { t, type Lang } from '../i18n/ui';
-import { CATEGORIES, categoriaPath } from '../data/categorias';
+import { SERIES, seriePath } from '../data/series';
 import theme from '../../theme.config';
 
 export interface Props {
@@ -27,10 +27,10 @@ const blogPath = localePrefix + '/blog';
     <nav class="worca-header-nav">
       <a href={localePrefix + '/'} class="worca-nav-link">{t('nav.home', locale)}</a>
 
-      <!-- Categorías dropdown -->
+      <!-- Series dropdown -->
       <div class="worca-dropdown">
         <button class="worca-dropdown-toggle">
-          CATEGORÍAS DEL BLOG
+          {t('nav.series_toggle', locale)}
           <svg class="worca-dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="worca-dropdown-menu">
@@ -38,12 +38,12 @@ const blogPath = localePrefix + '/blog';
             <span class="worca-term-dot red"></span>
             <span class="worca-term-dot yellow"></span>
             <span class="worca-term-dot green"></span>
-            <span class="worca-term-path">{t('nav.categorias_term', locale)}</span>
+            <span class="worca-term-path">{t('nav.series_term', locale)}</span>
           </div>
           <div class="worca-term-body">
-            <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./categorias/</span></div>
-            {CATEGORIES.map((cat) => (
-              <a href={categoriaPath(cat.slug, localePrefix)} class="worca-term-line"><span class="worca-term-gt">></span> {cat.name}<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
+            <div class="worca-term-prompt">$ <span class="worca-term-cmd">ls ./series/</span></div>
+            {SERIES.map((s) => (
+              <a href={seriePath(s.slug, localePrefix)} class="worca-term-line"><span class="worca-term-gt">></span> {s.name}<span class="worca-term-status">{t('nav.activo', locale)}</span></a>
             ))}
             <div class="worca-term-prompt">$ <span class="worca-term-cursor">_</span></div>
           </div>
@@ -67,9 +67,9 @@ const blogPath = localePrefix + '/blog';
 
   <div class="worca-mobile-menu" id="worcaMobileMenu">
     <a href={localePrefix + '/'} class="worca-mobile-nav-link">{t('nav.home', locale)}</a>
-    <div class="worca-mobile-section-label">CATEGORÍAS DEL BLOG</div>
-    {CATEGORIES.map((cat) => (
-      <a href={categoriaPath(cat.slug, localePrefix)} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {cat.name}</a>
+    <div class="worca-mobile-section-label">{t('nav.mobile_series', locale)}</div>
+    {SERIES.map((s) => (
+      <a href={seriePath(s.slug, localePrefix)} class="worca-mobile-nav-link"><span class="worca-term-gt">></span> {s.name}</a>
     ))}
     <a href={blogPath} class="worca-mobile-nav-link">{t('nav.archivo', locale)}</a>
     <button id="theme-toggle-mobile" class="worca-mobile-theme-toggle" aria-label="Cambiar tema">

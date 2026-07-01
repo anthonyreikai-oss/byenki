@@ -2,8 +2,8 @@
 titulo: "Los tres miedos evolutivos que tu cerebro no ha actualizado y sabotean cada decisión financiera que tomas"
 fecha: 2026-05-18
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - miedo financiero
   - psicología del dinero

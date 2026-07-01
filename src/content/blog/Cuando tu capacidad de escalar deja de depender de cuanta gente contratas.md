@@ -2,8 +2,8 @@
 titulo: "Cuando tu capacidad de escalar deja de depender de cuánta gente contratas"
 fecha: 2026-05-07
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - solo act
   - ia agencial

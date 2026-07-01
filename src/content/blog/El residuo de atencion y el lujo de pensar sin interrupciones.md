@@ -2,8 +2,8 @@
 titulo: "El residuo de atención y el lujo de pensar sin interrupciones"
 fecha: 2026-04-30
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - atencion
   - deep work

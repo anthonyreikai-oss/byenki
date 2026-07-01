@@ -3,7 +3,7 @@ titulo: "La densidad cognitiva como activo de seguridad en la economía del ruid
 fecha: 2026-04-27
 lang: es
 autor: How to 2030
-categoria: "como sobrevivir 2030"
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - atencion
   - deep work

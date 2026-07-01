@@ -2,8 +2,8 @@
 titulo: "La estrategia de deuda inteligente que los ultra-ricos usan para multiplicar su capital sin pagar impuestos"
 fecha: 2026-06-04
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - apalancamiento
   - deuda inteligente

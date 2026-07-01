@@ -2,8 +2,8 @@
 titulo: "Construir tu negocio como si fueras a venderlo en doce meses aunque no tengas intención de hacerlo"
 fecha: 2026-06-11
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - construir para vender
   - salida de negocio

@@ -20,13 +20,13 @@ interface BlogContentProps {
   };
 }
 
-const CATEGORIES = [
-  { name: "como sobrevivir 2030", slug: "como-sobrevivir-2030" },
-  { name: "Pensamiento Critico", slug: "pensamiento-critico" },
-  { name: "Desarrollo Creatividad", slug: "desarrollo-creatividad" },
-  { name: "Ensayos de Noticias", slug: "ensayos-de-noticias" },
-  { name: "1% Insight", slug: "1-insight" },
-  { name: "Personales", slug: "personales" },
+const SERIES = [
+  { name: "Cómo sobrevivir 2030", slug: "como-sobrevivir-2030" },
+  { name: "Construir riqueza", slug: "construir-riqueza" },
+  { name: "Pensar mejor", slug: "pensar-mejor" },
+  { name: "Creatividad e IA", slug: "creatividad-e-ia" },
+  { name: "El oficio de escribir", slug: "el-oficio-de-escribir" },
+  { name: "Significado", slug: "significado" },
 ];
 
 const t = (key: string, locale: string): string => {
@@ -38,7 +38,7 @@ const t = (key: string, locale: string): string => {
     'leer_post': { es: 'LEER ENSAYO →', en: 'READ ESSAY →' },
     'anterior': { es: '← ANTERIOR', en: '← PREVIOUS' },
     'siguiente': { es: 'SIGUIENTE →', en: 'NEXT →' },
-    'categorias': { es: 'CATEGORÍAS', en: 'CATEGORIES' },
+    'series': { es: 'CATEGORÍAS', en: 'CATEGORIES' },
     'suscribete': { es: 'SUSCRÍBETE', en: 'SUBSCRIBE' },
     'recibir': { es: 'RECIBIR ACTUALIZACIONES', en: 'RECEIVE UPDATES' },
     'baja_frec': { es: 'Baja frecuencia. Alta densidad. Sin spam. Solo ideas que mueven la aguja.', en: 'Low frequency. High density. No spam. Only ideas that move the needle.' },
@@ -75,7 +75,7 @@ export default function BlogContent({ locale: propLocale, initialPosts = [], ini
 
   React.useEffect(() => {
     const url = new URL(window.location.href);
-    const cat = url.searchParams.get('categoria');
+    const cat = url.searchParams.get('serie');
     if (cat && cat !== filter) {
       setFilter(cat);
     }
@@ -136,7 +136,7 @@ export default function BlogContent({ locale: propLocale, initialPosts = [], ini
         </div>
         <div className="flex gap-3 font-mono text-sm flex-wrap">
           <span className="text-w-muted uppercase">{t('filtro', locale)}</span>
-          {['ALL', ...CATEGORIES.map((c) => c.name)].map((f) => (
+          {['ALL', ...SERIES.map((s) => s.name)].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
@@ -184,7 +184,7 @@ export default function BlogContent({ locale: propLocale, initialPosts = [], ini
                   <span className="text-w-orange font-mono text-sm uppercase group-hover:translate-x-1 transition-transform duration-200 inline-block">
                     {t('leer_post', locale)}
                   </span>
-                  <span className="text-w-muted font-mono text-xs uppercase opacity-50">#{post.category}</span>
+                  <span className="text-w-muted font-mono text-xs uppercase opacity-50">en {post.category}</span>
                 </div>
               </div>
               </a>
@@ -228,20 +228,20 @@ export default function BlogContent({ locale: propLocale, initialPosts = [], ini
         </div>
       )}
 
-      {/* CATEGORIES CLOUD */}
+      {/* SERIES CLOUD */}
       <section className="mb-16">
         <div className="flex items-center gap-2 mb-6 font-mono text-xs text-w-orange uppercase tracking-widest">
           <span className="w-12 h-px bg-w-orange/40"></span>
-          <span>{t('categorias', locale)}</span>
+          <span>{t('series', locale)}</span>
         </div>
         <div className="flex flex-wrap gap-3">
-          {CATEGORIES.map((cat) => (
+          {SERIES.map((s) => (
             <a
-              key={cat.slug}
-              href={`/categoria/${cat.slug}`}
+              key={s.slug}
+              href={`/serie/${s.slug}`}
               className="font-mono text-sm border border-dashed border-dashed-cream px-4 py-2 text-w-cream hover:border-w-orange hover:text-w-orange transition-all cursor-pointer"
             >
-              #{cat.name}
+              #{s.name}
             </a>
           ))}
         </div>

@@ -2,8 +2,8 @@
 titulo: "Por qué el mercado se está reajustando para necesitar lo que tu cerebro neurodivergente hace bien"
 fecha: 2026-04-16
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - neurodivergencia
   - tdah

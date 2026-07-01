@@ -2,8 +2,8 @@
 titulo: "Cómo evaluar cualquier activo de inversión en sesenta segundos sin que la emoción nuble tu juicio"
 fecha: 2026-06-15
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - inversión
   - análisis de activos

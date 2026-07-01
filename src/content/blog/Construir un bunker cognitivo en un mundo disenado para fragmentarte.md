@@ -2,8 +2,8 @@
 titulo: "Construir un búnker cognitivo en un mundo diseñado para fragmentarte"
 fecha: 2026-05-11
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - bunker de atencion
   - residuo de atencion

@@ -3,7 +3,7 @@ titulo: "El veredicto del algoritmo: cuando escribir bien es sospechoso"
 fecha: 2026-06-25
 lang: es
 autor: By Enki
-categoria: "Personales"
+categoria: "El oficio de escribir"
 etiquetas:
   - IA
   - escritura

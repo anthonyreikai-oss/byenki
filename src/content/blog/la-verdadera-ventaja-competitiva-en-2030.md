@@ -3,7 +3,7 @@ titulo: "La verdadera ventaja competitiva en 2030"
 fecha: 2026-06-18
 lang: es
 autor: By Enki
-categoria: "Personales"
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - "2030"
   - atención

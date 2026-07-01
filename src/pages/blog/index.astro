@@ -22,7 +22,7 @@ const posts = allPosts.map((p) => ({
   excerpt: p.data.meta_descripcion || "",
 }));
 
-const initialCategory = Astro.url.searchParams.get('categoria') || 'ALL';
+const initialCategory = Astro.url.searchParams.get('serie') || 'ALL';
 ---
 
 <BaseLayout

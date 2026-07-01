@@ -2,8 +2,8 @@
 titulo: "Las siete reglas de hierro que separan al 0.01% de la mediocridad"
 fecha: 2026-05-21
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Pensar mejor"
 etiquetas:
   - simplicidad
   - escalar negocio

@@ -2,8 +2,8 @@
 titulo: "Por qué los Rockefeller siguen siendo ricos seis generaciones después mientras los Vanderbilt lo perdieron todo"
 fecha: 2026-05-14
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - riqueza generacional
   - rockefellers

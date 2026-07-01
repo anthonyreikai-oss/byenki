@@ -3,7 +3,7 @@ titulo: "La curiosidad es suficiente"
 fecha: 2026-06-22
 lang: es
 autor: By Enki
-categoria: "Personales"
+categoria: "Pensar mejor"
 etiquetas:
   - curiosidad
   - creatividad

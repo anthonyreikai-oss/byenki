@@ -2,8 +2,8 @@
 titulo: "Las siete leyes del dinero que separan a la elite del 0.01% del resto"
 fecha: 2026-05-28
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - leyes del dinero
   - riqueza

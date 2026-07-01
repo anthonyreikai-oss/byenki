@@ -3,31 +3,36 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getBlogPosts, formatDate } from '../../data/blog';
-import { CATEGORIES, CATEGORY_MAP } from '../../data/categorias';
+import { SERIES, SERIES_MAP } from '../../data/series';
 import { t, type Lang } from '../../i18n/ui';
 import theme from '../../../theme.config';
 
 export function getStaticPaths() {
-  return CATEGORIES.map((cat) => ({
-    params: { slug: cat.slug },
-    props: { categoria: cat.name },
+  return SERIES.map((serie) => ({
+    params: { slug: serie.slug },
+    props: { serie: serie.name },
   }));
 }
 
-const { categoria } = Astro.props;
+const { serie } = Astro.props;
 const locale: Lang = 'es';
 const localePrefix = '';
 const blogPath = '/blog';
 
 const allPosts = await getBlogPosts();
-const posts = allPosts.filter((p) => p.data.categoria === categoria);
-const otherCategories = CATEGORIES.filter((c) => c.name !== categoria);
+const posts = allPosts.filter((p) => p.data.categoria === serie);
+const otherSeries = SERIES.filter((s) => s.name !== serie);
 const readingTime = (t: string | undefined) => t || '';
+
+const postsBySeries = new Map<string, typeof allPosts>();
+for (const s of SERIES) {
+  postsBySeries.set(s.name, allPosts.filter(p => p.data.categoria === s.name));
+}
 ---
 
-<BaseLayout title={`${categoria} — Blog | ${theme.name}`} description={`Ensayos sobre ${categoria.toLowerCase()}`} locale={locale}>
+<BaseLayout title={`${serie} — Blog | ${theme.name}`} description={`Ensayos sobre ${serie.toLowerCase()}`} locale={locale}>
   <Fragment slot="head">
-    <meta name="keywords" content={`${categoria.toLowerCase()}, blog, ensayos`} />
+    <meta name="keywords" content={`${serie.toLowerCase()}, blog, ensayos`} />
   </Fragment>
   <Header locale={locale} />
   <main class="min-h-screen bg-w-black text-w-cream relative">
@@ -42,29 +47,52 @@ const readingTime = (t: string | undefined) => t || '';
     <div class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 pb-16">
       <div class="lg:flex lg:gap-8 xl:gap-10 justify-center">
 
-        <!-- Sidebar -->
-        <aside class="hidden lg:block w-52 shrink-0">
-          <div class="sticky flex flex-col gap-6 font-mono text-xs" style="top:5rem">
-            <div class="flex flex-col gap-1.5">
-              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">SOBRE ESTA CATEGORÍA</span>
-              <span class="text-w-cream text-sm font-bold leading-snug">{categoria}</span>
-              <span class="text-w-muted text-[11px] uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 inline-block w-fit">{posts.length} {posts.length === 1 ? 'ENSAYO' : 'ENSAYOS'}</span>
+        <!-- Sidebar: series tree + recent + other series -->
+        <aside class="hidden lg:block w-60 shrink-0">
+          <div class="sticky flex flex-col gap-5 font-mono text-xs" style="top:5rem">
+            <div class="flex flex-col gap-1.5 pt-4 border-t border-dashed border-dashed-cream">
+              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">{t('sidebar.series', locale)}</span>
+              <div class="flex flex-col gap-2">
+                {SERIES.map((s, i) => {
+                  const seriesPosts = postsBySeries.get(s.name) || [];
+                  const isCurrent = serie === s.name;
+                  const num = String(i + 1).padStart(2, '0');
+                  return (
+                    <a
+                      href={`/serie/${s.slug}`}
+                      class={`block transition-colors ${isCurrent ? 'text-w-orange font-bold' : 'text-w-muted hover:text-w-cream'}`}
+                    >
+                      <span class="text-[13px] leading-snug">▸ {num} {s.name} <span class="text-[11px] text-w-muted/50">({seriesPosts.length})</span></span>
+                      <span class="block text-[11px] leading-snug mt-0.5 text-w-muted/60">{s.desc}</span>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
 
-            <div class="flex flex-col gap-1.5 pt-4 border-t border-dashed border-dashed-cream">
-              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">ÚLTIMOS ENSAYOS</span>
+            <div class="flex flex-col gap-1.5">
+              <span class="text-w-orange uppercase tracking-widest text-sm mb-1">ÚLTIMOS DE ESTA SERIE</span>
               {posts.slice(0, 5).map((p) => (
-                <a href={`${blogPath}/${p.slug}`} class="block text-w-muted hover:text-w-cream transition-colors text-[13px] leading-snug">
+                <a
+                  href={`${blogPath}/${p.slug}`}
+                  class="block text-w-muted hover:text-w-cream transition-colors"
+                  style="font-size:14px"
+                >
                   ▸ {p.data.titulo}
                 </a>
               ))}
+              {posts.length > 5 && (
+                <a href={blogPath} class="text-w-orange hover:text-w-cream transition-colors uppercase mt-1" style="font-size:13px">
+                  HAY +{posts.length - 5} MÁS ENSAYOS POR LEER →
+                </a>
+              )}
             </div>
 
-            <div class="flex flex-col gap-1.5 pt-4 border-t border-dashed border-dashed-cream">
-              <span class="text-w-orange uppercase tracking-widest text-[11px] mb-1">OTRAS CATEGORÍAS</span>
-              {otherCategories.map((cat) => (
-                <a href={`/categoria/${cat.slug}`} class="block text-w-muted hover:text-w-cream transition-colors text-[13px] leading-snug">
-                  ▸ {cat.name}
+            <div class="flex flex-col gap-1.5">
+              <span class="text-w-orange uppercase tracking-widest text-sm mb-1">OTRAS SERIES</span>
+              {otherSeries.map((s) => (
+                <a href={`/serie/${s.slug}`} class="block text-w-muted hover:text-w-cream transition-colors" style="font-size:13px">
+                  ▸ {s.name}
                 </a>
               ))}
             </div>
@@ -73,23 +101,26 @@ const readingTime = (t: string | undefined) => t || '';
 
         <!-- Main content -->
         <article class="max-w-3xl xl:max-w-4xl min-w-0 flex-1">
-          <!-- Mobile: other categories -->
+          <!-- Mobile: other series -->
           <div class="lg:hidden flex flex-wrap gap-1 mb-6">
-            {otherCategories.map((cat) => (
-              <a href={`/categoria/${cat.slug}`} class="text-xs uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{cat.name}</a>
+            {otherSeries.map((s) => (
+              <a href={`/serie/${s.slug}`} class="text-xs uppercase border border-dashed border-dashed-cream px-1.5 py-0.5 text-w-muted hover:text-w-orange hover:border-w-orange transition-colors">#{s.name}</a>
             ))}
           </div>
 
           <header class="mb-10">
             <div class="flex items-center gap-3 mb-4 font-mono text-sm text-w-orange uppercase tracking-widest">
               <span class="w-8 h-px bg-w-orange/40"></span>
-              <span>CATEGORÍA</span>
+              <span>SERIE</span>
               <span class="text-w-muted">·</span>
               <span class="text-w-muted">{posts.length} {posts.length === 1 ? 'ENSAYO' : 'ENSAYOS'}</span>
             </div>
             <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[0.92] uppercase text-w-cream">
-              {categoria}
+              {serie}
             </h1>
+            <p class="font-mono text-[16px] text-w-muted/70 mt-4 max-w-2xl leading-relaxed">
+              {SERIES.find(s => s.name === serie)?.desc}
+            </p>
           </header>
 
           {posts.length > 0 ? (
@@ -128,7 +159,7 @@ const readingTime = (t: string | undefined) => t || '';
             </div>
           ) : (
             <p class="font-mono text-[18px] text-w-muted italic border-t border-dashed border-dashed-cream pt-8">
-              No hay ensayos en esta categoría todavía.
+              No hay ensayos en esta serie todavía.
             </p>
           )}
         </article>

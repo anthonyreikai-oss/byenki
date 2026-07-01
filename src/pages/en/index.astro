@@ -2,7 +2,8 @@
 import { getBlogPosts } from "../../data/blog";
 import PostLayout from "../../layouts/PostLayout.astro";
 
-const allPosts = await getBlogPosts("en");
+const locale = "en";
+const allPosts = await getBlogPosts(locale);
 
 if (!allPosts.length) {
   return Astro.redirect('/en/blog');
@@ -16,6 +17,6 @@ const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
 const nextPost = null;
 ---
 
-<PostLayout post={latestPost} prevPost={prevPost} nextPost={nextPost} locale="en">
+<PostLayout post={latestPost} prevPost={prevPost} nextPost={nextPost} locale={locale}>
   <Content />
 </PostLayout>

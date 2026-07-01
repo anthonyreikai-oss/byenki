@@ -2,8 +2,8 @@
 titulo: "Las ocho técnicas de comunicación que separan a quien es escuchado de quien es ignorado"
 fecha: 2026-06-01
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "El oficio de escribir"
 etiquetas:
   - comunicación ejecutiva
   - liderazgo

@@ -2,8 +2,8 @@
 titulo: "El fin del ticket de entrada universitario y lo que realmente construye protección"
 fecha: 2026-05-04
 lang: es
-autor: Anthony Reikai
-categoria: "como sobrevivir 2030"
+autor: by enki
+categoria: "Cómo sobrevivir 2030"
 etiquetas:
   - skills based hiring
   - educacion

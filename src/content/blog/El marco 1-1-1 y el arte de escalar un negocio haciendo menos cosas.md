@@ -2,8 +2,8 @@
 titulo: "El marco 1-1-1 y el arte de escalar un negocio haciendo menos cosas"
 fecha: 2026-06-08
 lang: es
-autor: Anthony Reikai
-categoria: "1% Insight"
+autor: by enki
+categoria: "Construir riqueza"
 etiquetas:
   - simplicidad
   - escalar negocio
